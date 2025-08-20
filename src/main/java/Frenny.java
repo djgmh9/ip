@@ -3,7 +3,7 @@ import java.util.*;
 public class Frenny {
     private static List<Task> items = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FrennyException {
         String intro = """
                 ____________________________________________________________
                  Hello! I'm Frenny
@@ -37,17 +37,33 @@ public class Frenny {
                 task.unmark();
                 System.out.println(task);
             } else if (Objects.equals(command, "todo")) {
-                Todo todo = Todo.addTodoTask(parts[1]);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(todo);
-                items.add(todo);
-                System.out.println("Now you have " + items.size() + " tasks in the list.");
+                try {
+                    Todo todo = Todo.addTodoTask(parts[1]);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(todo);
+                    items.add(todo);
+                    System.out.println("Now you have " + items.size() + " tasks in the list.");
+                } catch (FrennyException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("The description of a task cannot be empty my fren :(");
+                    continue;
+                }
             } else if (Objects.equals(command, "deadline")) {
-                Deadline deadline = Deadline.addDeadlineTask(parts[1]);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(deadline);
-                items.add(deadline);
-                System.out.println("Now you have " + items.size() + " tasks in the list.");
+                try {
+                    Deadline deadline = Deadline.addDeadlineTask(parts[1]);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(deadline);
+                    items.add(deadline);
+                    System.out.println("Now you have " + items.size() + " tasks in the list.");
+                } catch (FrennyException e) {
+                    System.out.println(e.getMessage());
+                    continue;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("The description of a deadline cannot be empty my fren :(");
+                    continue;
+                }
             } else if (Objects.equals(command, "event")) {
                 System.out.println("Got it. I've added this task:");
                 Event event = Event.addEventTask(parts[1]);
@@ -55,9 +71,7 @@ public class Frenny {
                 items.add(event);
                 System.out.println("Now you have " + items.size() + " tasks in the list.");
             } else {
-                Task task = new Task(input);
-                items.add(task);
-                System.out.println("added: " + input);
+                System.out.println("Idk what you mean :(");
             }
             System.out.println("____________________________________________________________");
         }

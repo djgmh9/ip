@@ -8,7 +8,10 @@ public class Todo extends Task {
         return "[T]" + super.toString();
     }
 
-    public static Todo addTodoTask(String detail) {
+    public static Todo addTodoTask(String detail) throws FrennyException {
+        if (detail.trim().isEmpty()) {
+            throw new FrennyException("The description of a todo cannot be empty my fren :(");
+        }
         return new Todo(detail);
     }
 }
