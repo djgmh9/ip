@@ -1,4 +1,14 @@
-package PACKAGE_NAME;
+public class Todo extends Task {
+    private Todo(String description) {
+        super(description);
+    }
 
-public class Todo {
+    @Override
+    public String toString() {
+        return "[T]" + super.toString();
+    }
+
+    public static Todo addTodoTask(String detail) {
+        return new Todo(detail);
+    }
 }
