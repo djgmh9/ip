@@ -24,6 +24,11 @@ public class Frenny {
                 for (int i = 0; i < items.size(); i++) {
                     System.out.println((i + 1) + ". " + items.get(i));
                 }
+            } else if (Objects.equals(command, "delete")) {
+                System.out.println("Noted. I've removed this task:");
+                System.out.println(items.get(Integer.parseInt(parts[1]) - 1));
+                items.remove(Integer.parseInt(parts[1]) - 1);
+                System.out.println("Now you have " + items.size() + " tasks in the list.");
             } else if (Objects.equals(command, "mark")) {
                 System.out.println("Nice! I've marked this task as done:");
                 int taskNumber = Integer.parseInt(parts[1]) - 1;
