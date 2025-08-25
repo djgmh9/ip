@@ -2,9 +2,10 @@ public class Deadline extends Task {
 
     protected String by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by, boolean isDone) {
         super(description);
         this.by = by;
+        this.isDone = isDone;
     }
 
     @Override
@@ -12,7 +13,7 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
 
-    public static Deadline addDeadlineTask(String detail) throws FrennyException {
+    public static Deadline addDeadlineTask(String detail, boolean isDone) throws FrennyException {
         if (!detail.contains(" /by ")) {
             throw new FrennyException("The deadline must be specified with ' /by ' my fren :(");
         }
@@ -27,6 +28,10 @@ public class Deadline extends Task {
             throw new FrennyException("The deadline time cannot be empty my fren :(");
         }
         String by = parts[1];
-        return new Deadline(description, by);
+        return new Deadline(description, by, isDone);
+    }
+
+    public String getCommand() {
+        return String.format("%s | deadline %s /by %s", (isDone() ? "1" : "0"), this.description, this.by);
     }
 }
