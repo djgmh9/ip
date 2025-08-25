@@ -6,6 +6,4 @@ mark 1
 mark 3
 delete 1
 list
-unmark 3
-list
 bye
