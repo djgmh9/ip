@@ -1,8 +1,6 @@
-list
 todo homework cs1
-deadline do cs2101 /by fri 2pm
-event cs2103 lecture every week /from 2pm /to 4pm
-deadline do project /by mon 10am
+deadline do cs2101 /by 01/01/2025 14:00
+event cs2103 lecture every week /from 02/02/2025 11:00 /to 03/03/2025 12:00
 list
 mark 1
 mark 3
