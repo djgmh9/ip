@@ -51,15 +51,15 @@ public class Frenny {
             System.out.println("____________________________________________________________");
             if (Objects.equals(commandEnum, Command.BYE)) {
                 System.out.println("Bye. Hope to see you again soon!");
-                try {
-                    writeFile(taskList.getTasks());
-                } catch (IOException e) {
-                    System.out.println("An error occurred while writing to the file.");
-                    e.printStackTrace();
-                }
                 break;
             } else {
                 taskList.processInput(input);
+            }
+            try {
+                writeFile(taskList.getTasks());
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing to the file.");
+                e.printStackTrace();
             }
             System.out.println("____________________________________________________________");
         }
