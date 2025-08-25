@@ -1,16 +1,20 @@
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
 
-    protected String by;
+    private final String by;
+    private Time time;
 
-    public Deadline(String description, String by, boolean isDone) {
+    public Deadline(String description, String by, boolean isDone, Time time) {
         super(description);
         this.by = by;
         this.isDone = isDone;
+        this.time = time;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + time.getDateTime() + ")";
     }
 
     public static Deadline addDeadlineTask(String detail, boolean isDone) throws FrennyException {
@@ -28,7 +32,8 @@ public class Deadline extends Task {
             throw new FrennyException("The deadline time cannot be empty my fren :(");
         }
         String by = parts[1];
-        return new Deadline(description, by, isDone);
+        Time time = Time.parseDateTime(by);
+        return new Deadline(description, by, isDone, time);
     }
 
     public String getCommand() {

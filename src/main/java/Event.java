@@ -1,17 +1,21 @@
 public class Event extends Task {
-    protected String from;
-    protected String to;
+    private String from;
+    private String to;
+    private Time timeFrom;
+    private Time timeTo;
 
-    private Event(String description, String from, String to, boolean isDone) {
+    private Event(String description, String from, String to, boolean isDone, Time timeFrom, Time timeTo) {
         super(description);
         this.from = from;
         this.to = to;
         this.isDone = isDone;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + timeFrom.getDateTime() + " to: " + timeTo.getDateTime() + ")";
     }
 
     public static Event addEventTask(String detail, boolean isDone) throws FrennyException {
@@ -20,7 +24,9 @@ public class Event extends Task {
         String[] timeParts = parts[1].split(" /to ", 2);
         String from = timeParts[0];
         String to = timeParts[1];
-        return new Event(description, from, to, isDone);
+        Time timeFrom = Time.parseDateTime(from);
+        Time timeTo = Time.parseDateTime(to);
+        return new Event(description, from, to, isDone, timeFrom, timeTo);
     }
 
     public String getCommand() {
