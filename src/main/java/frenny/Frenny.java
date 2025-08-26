@@ -9,11 +9,20 @@ import ui.Ui;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The Frenny class is the main entry point for the Frenny application.
+ * It initializes the application, processes user input, and manages the task list.
+ */
 public class Frenny {
     private static final String projectDir = System.getProperty("user.dir");
     private final Storage storage;
     private final TaskList taskList;
 
+    /**
+     * Constructs a Frenny application with the specified file path for storage.
+     *
+     * @param filePath The file path where tasks will be stored.
+     */
     public Frenny(String filePath) {
         storage = new Storage(filePath);
         Ui.showIntro();
@@ -22,6 +31,9 @@ public class Frenny {
         storage.readFile(taskList);
     }
 
+    /**
+     * Runs the main loop of the Frenny application, processing user input until the user decides to exit.
+     */
     public void run() {
         Scanner consoleScanner = new Scanner(System.in);
         while (true) {
@@ -37,7 +49,7 @@ public class Frenny {
                 Parser.processInput(taskList, input);
             }
             try {
-                storage.writeFile(taskList.getList());
+                storage.writeFile(taskList);
             } catch (IOException e) {
                 System.out.println("An error occurred while writing to the file.");
                 e.printStackTrace();
@@ -46,6 +58,11 @@ public class Frenny {
         }
     }
 
+    /**
+     * The main method to start the Frenny application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         String filePath = projectDir + "/data/frenny.txt";
         new Frenny(filePath).run();
