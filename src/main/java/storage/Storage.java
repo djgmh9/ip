@@ -31,7 +31,12 @@ public class Storage {
     }
 
     private void handleCorruptedFile() {
-        System.out.println("Delete old history and create a new file instead? (y/n)");
+        System.out.println("""
+                            Corrupted history file.
+                            Attempt to recover some saved tasks
+                            (totally depends on your luck)? (y/n)
+                            """);
+
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine().trim().toLowerCase();
         if (response.equals("y")) {
