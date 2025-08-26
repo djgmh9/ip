@@ -1,3 +1,8 @@
+package Task;
+
+import Exception.FrennyException;
+import Time.Time;
+
 public class Event extends Task {
     private String from;
     private String to;

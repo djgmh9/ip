@@ -1,3 +1,7 @@
+package Ui;
+
+import Task.Task;
+
 public class Ui {
     public static void showIntro() {
         String intro = """

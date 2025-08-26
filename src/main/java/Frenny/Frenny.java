@@ -1,3 +1,11 @@
+package Frenny;
+
+import Storage.Storage;
+import Task.TaskList;
+import Ui.Ui;
+import Command.Command;
+import Command.Parser;
+
 import java.io.IOException;
 import java.util.*;
 

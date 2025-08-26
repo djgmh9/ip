@@ -1,3 +1,5 @@
+package Command;
+
 public enum Command {
     LIST,
     DELETE,
