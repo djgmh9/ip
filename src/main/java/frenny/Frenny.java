@@ -1,10 +1,10 @@
-package Frenny;
+package frenny;
 
-import Storage.Storage;
-import Task.TaskList;
-import Ui.Ui;
-import Command.Command;
-import Command.Parser;
+import storage.Storage;
+import task.TaskList;
+import ui.Ui;
+import command.Command;
+import command.Parser;
 
 import java.io.IOException;
 import java.util.*;

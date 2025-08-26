@@ -1,12 +1,12 @@
-package Command;
+package command;
 
-import Task.Task;
-import Task.Deadline;
-import Task.Event;
-import Task.TaskList;
-import Task.Todo;
-import Ui.Ui;
-import Exception.FrennyException;
+import task.Task;
+import task.Deadline;
+import task.Event;
+import task.TaskList;
+import task.Todo;
+import ui.Ui;
+import exception.FrennyException;
 
 import java.util.Objects;
 

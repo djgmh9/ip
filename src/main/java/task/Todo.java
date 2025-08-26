@@ -1,6 +1,6 @@
-package Task;
+package task;
 
-import Exception.FrennyException;
+import exception.FrennyException;
 
 public class Todo extends Task {
     private Todo (String description, boolean isDone) {

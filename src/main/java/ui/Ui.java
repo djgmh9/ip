@@ -1,6 +1,6 @@
-package Ui;
+package ui;
 
-import Task.Task;
+import task.Task;
 
 public class Ui {
     public static void showIntro() {

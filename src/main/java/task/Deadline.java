@@ -1,7 +1,7 @@
-package Task;
+package task;
 
-import Exception.FrennyException;
-import Time.Time;
+import exception.FrennyException;
+import time.Time;
 
 public class Deadline extends Task {
 

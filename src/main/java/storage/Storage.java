@@ -1,8 +1,8 @@
-package Storage;
+package storage;
 
-import Command.Parser;
-import Task.Task;
-import Task.TaskList;
+import command.Parser;
+import task.Task;
+import task.TaskList;
 
 import java.io.File;
 import java.io.FileWriter;
