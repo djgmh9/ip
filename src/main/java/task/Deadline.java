@@ -1,6 +1,7 @@
 package task;
 
 import exception.FrennyException;
+import exception.TimeFormatException;
 import time.Time;
 
 public class Deadline extends Task {
@@ -20,7 +21,7 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + time.getDateTime() + ")";
     }
 
-    public static Deadline addDeadlineTask(String detail, boolean isDone) throws FrennyException {
+    public static Deadline addDeadlineTask(String detail, boolean isDone) throws FrennyException, TimeFormatException {
         if (!detail.contains(" /by ")) {
             throw new FrennyException("The deadline must be specified with ' /by ' my fren :(");
         }

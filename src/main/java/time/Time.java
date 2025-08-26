@@ -1,5 +1,7 @@
 package time;
 
+import exception.TimeFormatException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,8 +15,13 @@ public class Time {
         this.dateTime = dateTime;
     }
 
-    public static Time parseDateTime(String dateTimeStr) {
-        return new Time(LocalDateTime.parse(dateTimeStr, formatter));
+    public static Time parseDateTime(String dateTimeStr) throws TimeFormatException {
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
+            return new Time(dateTime);
+        } catch (Exception e) {
+            throw new TimeFormatException("Invalid date/time format. Please use 'dd/MM/yyyy HH:mm' format.");
+        }
     }
 
     public String getDateTime() {

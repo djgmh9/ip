@@ -1,6 +1,7 @@
 package task;
 
 import exception.FrennyException;
+import exception.TimeFormatException;
 import time.Time;
 
 public class Event extends Task {
@@ -23,7 +24,7 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + timeFrom.getDateTime() + " to: " + timeTo.getDateTime() + ")";
     }
 
-    public static Event addEventTask(String detail, boolean isDone) throws FrennyException {
+    public static Event addEventTask(String detail, boolean isDone) throws FrennyException, TimeFormatException {
         String[] parts = detail.split(" /from ", 2);
         String description = parts[0];
         String[] timeParts = parts[1].split(" /to ", 2);

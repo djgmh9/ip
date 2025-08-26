@@ -1,6 +1,10 @@
 package storage;
 
 import command.Parser;
+import exception.CorruptedFileException;
+import exception.FrennyException;
+import exception.InvalidCommandException;
+import exception.TimeFormatException;
 import task.Task;
 import task.TaskList;
 
@@ -17,6 +21,29 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    public void reinitFile() throws IOException {
+        File historyFile = new File(filePath);
+        if (historyFile.exists()) {
+            historyFile.delete();
+        }
+        historyFile.getParentFile().mkdirs();
+        historyFile.createNewFile();
+    }
+
+    private void handleCorruptedFile() {
+        System.out.println("Delete old history and create a new file instead? (y/n)");
+        Scanner scanner = new Scanner(System.in);
+        String response = scanner.nextLine().trim().toLowerCase();
+        if (response.equals("y")) {
+            try {
+                reinitFile();
+                System.out.println("Old history deleted. A new file has been created.");
+            } catch (IOException e) {
+                System.out.println("An error occurred while reinitializing the file.");
+            }
+        }
+    }
+
     public void readFile(TaskList taskList) {
         try {
             File historyFile = new File(filePath);
@@ -26,6 +53,8 @@ public class Storage {
                         String line = fileScanner.nextLine();
                         Parser.processHistory(taskList, line);
                     }
+                } catch (InvalidCommandException | TimeFormatException | FrennyException | CorruptedFileException e) {
+                    handleCorruptedFile();
                 }
             } else {
                 historyFile.getParentFile().mkdirs();
@@ -33,7 +62,7 @@ public class Storage {
             }
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file.");
-            e.printStackTrace();
+            handleCorruptedFile();
         }
     }
 

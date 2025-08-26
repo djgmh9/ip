@@ -1,5 +1,8 @@
 package command;
 
+import exception.CorruptedFileException;
+import exception.InvalidCommandException;
+import exception.TimeFormatException;
 import task.Task;
 import task.Deadline;
 import task.Event;
@@ -12,35 +15,30 @@ import java.util.Objects;
 
 // A simple class to store the parsed results in a structured way.
 public class Parser {
-    public static void processHistory(TaskList taskList, String input) {
+    public static void processHistory(TaskList taskList, String input) throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
         String[] parts = input.split(" \\| ", 2);
-        boolean isDone = parts[0].equals("1");
+        boolean isDone;
+        if (Objects.equals(parts[0], "1")) {
+            isDone = true;
+        } else if (Objects.equals(parts[0], "0")) {
+            isDone = false;
+        } else {
+            throw new CorruptedFileException("Corrupted mark status in file :(");
+        }
         String[] taskParts = parts[1].split(" ", 2);
         String taskType = taskParts[0];
         Command commandEnum = Command.fromString(taskType);
         if (Objects.equals(commandEnum, Command.TODO)) {
-            try {
-                Todo todo = Todo.addTodoTask(taskParts[1], isDone);
-                taskList.addTask(todo);
-            } catch (FrennyException e) {
-                throw new RuntimeException(e);
-            }
+            Todo todo = Todo.addTodoTask(taskParts[1], isDone);
+            taskList.addTask(todo);
         } else if (Objects.equals(commandEnum, Command.DEADLINE)) {
-            try {
-                Deadline deadline = Deadline.addDeadlineTask(taskParts[1], isDone);
-                taskList.addTask(deadline);
-            } catch (FrennyException e) {
-                throw new RuntimeException(e);
-            }
+            Deadline deadline = Deadline.addDeadlineTask(taskParts[1], isDone);
+            taskList.addTask(deadline);
         } else if (Objects.equals(commandEnum, Command.EVENT)) {
-            try {
-                Event event = Event.addEventTask(taskParts[1], isDone);
-                taskList.addTask(event);
-            } catch (FrennyException e) {
-                throw new RuntimeException(e);
-            }
+            Event event = Event.addEventTask(taskParts[1], isDone);
+            taskList.addTask(event);
         } else {
-            System.out.println("Corrupted data in file :(");
+            throw new InvalidCommandException("Invalid command in file :(");
         }
     }
 
@@ -89,6 +87,8 @@ public class Parser {
                 System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("The description of a deadline cannot be empty my fren :(");
+            } catch (TimeFormatException e) {
+                System.out.println(e.getMessage());
             }
         } else if (Objects.equals(commandEnum, Command.EVENT)) {
             try {
@@ -100,6 +100,8 @@ public class Parser {
                 throw new RuntimeException(e);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("The description of a event cannot be empty my fren :(");
+            } catch (TimeFormatException e) {
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Idk what you mean :(");
