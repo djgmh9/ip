@@ -1,3 +1,5 @@
+package Exception;
+
 public class FrennyException extends Exception{
     public FrennyException(String message) {
         super(message);

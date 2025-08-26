@@ -1,4 +1,13 @@
-import java.util.Map;
+package Command;
+
+import Task.Task;
+import Task.Deadline;
+import Task.Event;
+import Task.TaskList;
+import Task.Todo;
+import Ui.Ui;
+import Exception.FrennyException;
+
 import java.util.Objects;
 
 // A simple class to store the parsed results in a structured way.
