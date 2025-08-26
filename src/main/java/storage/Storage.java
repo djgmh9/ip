@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The Storage class is responsible for reading from and writing to the task history file.
+ * It handles file initialization, reading tasks into the TaskList, and writing tasks from the TaskList to the file.
+ */
 public class Storage {
     private final String filePath;
 
@@ -21,7 +25,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public void reinitFile() throws IOException {
+    private void reinitFile() throws IOException {
         File historyFile = new File(filePath);
         if (historyFile.exists()) {
             historyFile.delete();
@@ -30,6 +34,10 @@ public class Storage {
         historyFile.createNewFile();
     }
 
+    /**
+     * Handles the scenario when the history file is corrupted.
+     * Prompts the user to decide whether to attempt recovery or reinitialize the file.
+     */
     private void handleCorruptedFile() {
         System.out.println("""
                             Corrupted history file.
@@ -49,6 +57,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads tasks from the history file and populates the provided TaskList.
+     * If the file does not exist, it creates a new one.
+     * If the file is corrupted, it handles the corruption appropriately.
+     *
+     * @param taskList The TaskList to populate with tasks from the file.
+     */
     public void readFile(TaskList taskList) {
         try {
             File historyFile = new File(filePath);
@@ -71,7 +86,14 @@ public class Storage {
         }
     }
 
-    public void writeFile(List<Task> items) throws IOException {
+    /**
+     * Writes the tasks from the provided TaskList to the history file.
+     *
+     * @param taskList The TaskList containing tasks to be written to the file.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
+    public void writeFile(TaskList taskList) throws IOException {
+        List<Task> items = taskList.getList();
         FileWriter fw = new FileWriter(filePath);
         for (Task item : items) {
             // Write each task to the file

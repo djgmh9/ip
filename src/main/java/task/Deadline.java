@@ -4,23 +4,40 @@ import exception.FrennyException;
 import exception.TimeFormatException;
 import time.Time;
 
+/**
+ * Represents a deadline task with a description and a due date/time.
+ */
 public class Deadline extends Task {
 
     private final String by;
     private Time time;
 
-    public Deadline(String description, String by, boolean isDone, Time time) {
+    private Deadline(String description, String by, boolean isDone, Time time) {
         super(description);
         this.by = by;
         this.isDone = isDone;
         this.time = time;
     }
 
+    /**
+     * Returns a string representation of the deadline task, including its type, status, description, and due date/time.
+     *
+     * @return A formatted string representing the deadline task.
+     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + time.getDateTime() + ")";
     }
 
+    /**
+     * Creates a new Deadline task from the given detail string and completion status.
+     *
+     * @param detail The detail string containing the description and due date/time.
+     * @param isDone The completion status of the task.
+     * @return A new Deadline task.
+     * @throws FrennyException If the detail string is improperly formatted or missing required information.
+     * @throws TimeFormatException If the due date/time format is invalid.
+     */
     public static Deadline addDeadlineTask(String detail, boolean isDone) throws FrennyException, TimeFormatException {
         if (!detail.contains(" /by ")) {
             throw new FrennyException("The deadline must be specified with ' /by ' my fren :(");
@@ -40,6 +57,12 @@ public class Deadline extends Task {
         return new Deadline(description, by, isDone, time);
     }
 
+    /**
+     * Returns a command string that can be used to recreate this deadline task.
+     * However, it also includes the completion status at the start.
+     *
+     * @return A formatted command string representing the deadline task.
+     */
     public String getCommand() {
         return String.format("%s | deadline %s /by %s", (isDone() ? "1" : "0"), this.description, this.by);
     }

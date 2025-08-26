@@ -13,8 +13,21 @@ import exception.FrennyException;
 
 import java.util.Objects;
 
-// A simple class to store the parsed results in a structured way.
+/**
+ * The Parser class is responsible for processing user input and history data.
+ * It interprets commands and manages tasks in the TaskList.
+ */
 public class Parser {
+    /**
+     * Processes a line from the history file and adds the corresponding task to the TaskList.
+     *
+     * @param taskList The TaskList to which the task will be added.
+     * @param input    The line from the history file representing a task.
+     * @throws FrennyException         If there is a general error related to task creation.
+     * @throws TimeFormatException     If there is an error in the time format.
+     * @throws InvalidCommandException If the command in the file is invalid.
+     * @throws CorruptedFileException  If the file is corrupted.
+     */
     public static void processHistory(TaskList taskList, String input) throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
         String[] parts = input.split(" \\| ", 2);
         boolean isDone;
@@ -42,6 +55,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Processes user input and performs the corresponding action on the TaskList.
+     *
+     * @param taskList The TaskList to be modified based on user input.
+     * @param input    The user input command.
+     */
     public static void processInput(TaskList taskList, String input) {
         // Implementation for adding a task
         String[] parts = input.split(" ", 2);
@@ -83,12 +102,10 @@ public class Parser {
                 Ui.showAddMessage(deadline);
                 taskList.addTask(deadline);
                 Ui.showListSize(taskList.getSize());
-            } catch (FrennyException e) {
+            } catch (FrennyException | TimeFormatException e) {
                 System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("The description of a deadline cannot be empty my fren :(");
-            } catch (TimeFormatException e) {
-                System.out.println(e.getMessage());
             }
         } else if (Objects.equals(commandEnum, Command.EVENT)) {
             try {
@@ -96,12 +113,10 @@ public class Parser {
                 Ui.showAddMessage(event);
                 taskList.addTask(event);
                 Ui.showListSize(taskList.getSize());
-            } catch (FrennyException e) {
-                throw new RuntimeException(e);
+            } catch (FrennyException | TimeFormatException e) {
+                System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("The description of a event cannot be empty my fren :(");
-            } catch (TimeFormatException e) {
-                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Idk what you mean :(");
