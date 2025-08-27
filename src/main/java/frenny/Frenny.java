@@ -1,13 +1,14 @@
 package frenny;
 
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Scanner;
+
 import command.Command;
 import command.Parser;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
-
-import java.io.IOException;
-import java.util.*;
 
 /**
  * The Frenny class is the main entry point for the Frenny application.

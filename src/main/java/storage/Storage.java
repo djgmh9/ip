@@ -1,5 +1,11 @@
 package storage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
+
 import command.Parser;
 import exception.CorruptedFileException;
 import exception.FrennyException;
@@ -7,12 +13,6 @@ import exception.InvalidCommandException;
 import exception.TimeFormatException;
 import task.Task;
 import task.TaskList;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * The Storage class is responsible for reading from and writing to the task history file.

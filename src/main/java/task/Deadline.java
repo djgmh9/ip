@@ -49,7 +49,8 @@ public class Deadline extends Task {
         String description = parts[0];
         if (detail.trim().isEmpty() || description.trim().isEmpty()) {
             throw new FrennyException("The description of a deadline cannot be empty my fren :(");
-        } if (parts.length < 2 || parts[1].trim().isEmpty()) {
+        }
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
             throw new FrennyException("The deadline time cannot be empty my fren :(");
         }
         String by = parts[1];

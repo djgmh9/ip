@@ -68,6 +68,7 @@ public class Event extends Task {
      * @return A command string representing the event task.
      */
     public String getCommand() {
-        return String.format("%s | event %s /from %s /to %s", (isDone() ? "1" : "0"), this.description, this.from, this.to);
+        return String.format("%s | event %s /from %s /to %s", (
+                isDone() ? "1" : "0"), this.description, this.from, this.to);
     }
 }
