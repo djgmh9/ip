@@ -6,7 +6,7 @@ import exception.FrennyException;
  * Represents a Todo task.
  */
 public class Todo extends Task {
-    private Todo (String description, boolean isDone) {
+    private Todo(String description, boolean isDone) {
         super(description);
         this.isDone = isDone;
     }

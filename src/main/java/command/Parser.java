@@ -1,17 +1,18 @@
 package command;
 
+import java.util.Objects;
+
 import exception.CorruptedFileException;
+import exception.FrennyException;
 import exception.InvalidCommandException;
 import exception.TimeFormatException;
-import task.Task;
 import task.Deadline;
 import task.Event;
+import task.Task;
 import task.TaskList;
 import task.Todo;
 import ui.Ui;
-import exception.FrennyException;
 
-import java.util.Objects;
 
 /**
  * The Parser class is responsible for processing user input and history data.
@@ -28,7 +29,8 @@ public class Parser {
      * @throws InvalidCommandException If the command in the file is invalid.
      * @throws CorruptedFileException  If the file is corrupted.
      */
-    public static void processHistory(TaskList taskList, String input) throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
+    public static void processHistory(TaskList taskList, String input)
+            throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
         String[] parts = input.split(" \\| ", 2);
         boolean isDone;
         if (Objects.equals(parts[0], "1")) {

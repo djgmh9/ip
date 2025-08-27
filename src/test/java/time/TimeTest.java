@@ -1,9 +1,10 @@
 package time;
 
-import exception.TimeFormatException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import exception.TimeFormatException;
 
 public class TimeTest {
     @Test

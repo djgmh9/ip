@@ -1,9 +1,9 @@
 package time;
 
-import exception.TimeFormatException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import exception.TimeFormatException;
 
 /**
  * Represents a date and time.

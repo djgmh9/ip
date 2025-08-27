@@ -3,11 +3,15 @@ package task;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The TaskList class manages a list of tasks.
+ * It provides methods to add, delete, and retrieve tasks from the list.
+ */
 public class TaskList {
     private static final List<Task> items = new ArrayList<>();
 
     /**
-     * Gets the list of tasks as a List<Task>.
+     * Gets the list of tasks.
      * @return List of tasks.
      */
     public List<Task> getList() {
