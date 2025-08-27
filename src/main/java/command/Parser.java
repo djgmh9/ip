@@ -69,14 +69,20 @@ public class Parser {
         String taskType = parts[0];
         Command commandEnum = Command.fromString(taskType);
         if (Objects.equals(commandEnum, Command.LIST)) {
-            Ui.showListMessage();
-            for (int i = 0; i < taskList.getList().size(); i++) {
-                System.out.println((i + 1) + ". " + taskList.getTask(i));
+            Ui.showListMessage(taskList.getListSize());
+            taskList.printList();
+        } else if (Objects.equals(commandEnum, Command.FIND)) {
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                System.out.println("The search keyword cannot be empty my fren :(");
+                return;
             }
+            String keyword = parts[1].trim();
+            Ui.showFindMessage();
+            taskList.searchTasksByKeyword(keyword).printList();
         } else if (Objects.equals(commandEnum, Command.DELETE)) {
             Ui.showDeleteMessage(taskList.getTask(Integer.parseInt(parts[1]) - 1));
             taskList.deleteTask(Integer.parseInt(parts[1]) - 1);
-            Ui.showListSize(taskList.getSize());
+            Ui.showListSize(taskList.getListSize());
         } else if (Objects.equals(commandEnum, Command.MARK)) {
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             Task task = taskList.getTask(taskNumber);
@@ -92,7 +98,7 @@ public class Parser {
                 Todo todo = Todo.addTodoTask(parts[1], false);
                 Ui.showAddMessage(todo);
                 taskList.addTask(todo);
-                Ui.showListSize(taskList.getSize());
+                Ui.showListSize(taskList.getListSize());
             } catch (FrennyException e) {
                 System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -103,7 +109,7 @@ public class Parser {
                 Deadline deadline = Deadline.addDeadlineTask(parts[1], false);
                 Ui.showAddMessage(deadline);
                 taskList.addTask(deadline);
-                Ui.showListSize(taskList.getSize());
+                Ui.showListSize(taskList.getListSize());
             } catch (FrennyException | TimeFormatException e) {
                 System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -114,7 +120,7 @@ public class Parser {
                 Event event = Event.addEventTask(parts[1], false);
                 Ui.showAddMessage(event);
                 taskList.addTask(event);
-                Ui.showListSize(taskList.getSize());
+                Ui.showListSize(taskList.getListSize());
             } catch (FrennyException | TimeFormatException e) {
                 System.out.println(e.getMessage());
             } catch (ArrayIndexOutOfBoundsException e) {

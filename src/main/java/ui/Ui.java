@@ -36,8 +36,12 @@ public class Ui {
     /**
      * Displays the message indicating the start of the task list.
      */
-    public static void showListMessage() {
-        System.out.println("Here are the tasks in your list:");
+    public static void showListMessage(int listSize) {
+        if (listSize == 0) {
+            System.out.println("No task found :(");
+        } else {
+            System.out.println("Here are the tasks in your list:");
+        }
     }
 
     /**
@@ -63,10 +67,14 @@ public class Ui {
     /**
      * Displays the current size of the task list.
      *
-     * @param size The current number of tasks in the list.
+     * @param listSize The current number of tasks in the list.
      */
-    public static void showListSize(int size) {
-        System.out.println("Now you have " + size + " tasks in the list.");
+    public static void showListSize(int listSize) {
+        if (listSize == 1) {
+            System.out.println("Now you have " + listSize + " task in the list.");
+        } else {
+            System.out.println("Now you have " + listSize + " tasks in the list.");
+        }
     }
 
     /**
@@ -87,5 +95,12 @@ public class Ui {
     public static void showUnmarkMessage(Task task) {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task);
+    }
+
+    /**
+     * Displays the message indicating the start of the search results.
+     */
+    public static void showFindMessage() {
+        System.out.println("Here are the matching tasks in your list:");
     }
 }

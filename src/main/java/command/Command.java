@@ -5,6 +5,7 @@ package command;
  */
 public enum Command {
     LIST,
+    FIND,
     DELETE,
     MARK,
     UNMARK,

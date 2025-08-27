@@ -2,14 +2,31 @@ package task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The TaskList class manages a list of tasks.
  * It provides methods to add, delete, and retrieve tasks from the list.
  */
 public class TaskList {
-    private static final List<Task> items = new ArrayList<>();
+    private final List<Task> items;
 
+    public TaskList(List<Task> items) {
+        this.items = items;
+    }
+
+    public TaskList() {
+        items = new ArrayList<>();
+    }
+
+    /**
+     * Prints the list of tasks with their indices.
+     */
+    public void printList() {
+        for (int i = 0; i < getListSize(); i++) {
+            System.out.println((i + 1) + "." + items.get(i));
+        }
+    }
     /**
      * Gets the list of tasks.
      * @return List of tasks.
@@ -22,7 +39,7 @@ public class TaskList {
      * Gets the number of tasks in the list.
      * @return Number of tasks.
      */
-    public int getSize() {
+    public int getListSize() {
         return items.size();
     }
 
@@ -49,5 +66,23 @@ public class TaskList {
      */
     public void deleteTask(int index) {
         items.remove(index);
+    }
+
+    /**
+     * Searches for tasks containing the specified keyword in their description.
+     * The search is case-insensitive.
+     * @param keyword Keyword to search for.
+     * @return A new TaskList containing tasks that match the keyword.
+     */
+    public TaskList searchTasksByKeyword(String keyword) {
+        // Convert the search keyword to lowercase once to be efficient
+        String lowerCaseKeyword = keyword.toLowerCase();
+
+        return new TaskList(items.stream() // 1. Convert the list to a stream
+                .filter(task -> task
+                        .getDescription()
+                        .toLowerCase()
+                        .contains(lowerCaseKeyword))// 2. Keep only matching tasks
+                .collect(Collectors.toList())); // 3. Collect the results back into a new list
     }
 }
