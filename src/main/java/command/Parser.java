@@ -63,71 +63,107 @@ public class Parser {
      * @param taskList The TaskList to be modified based on user input.
      * @param input    The user input command.
      */
-    public static void processInput(TaskList taskList, String input) {
+    public static String processInput(TaskList taskList, String input) {
         // Implementation for adding a task
         String[] parts = input.split(" ", 2);
         String taskType = parts[0];
         Command commandEnum = Command.fromString(taskType);
         if (Objects.equals(commandEnum, Command.LIST)) {
-            Ui.showListMessage(taskList.getListSize());
-            taskList.printList();
+            StringBuilder response = new StringBuilder();
+            String listMessage = Ui.showListMessage(taskList.getListSize());
+            response.append(listMessage).append("\n");
+            String result = taskList.printList();
+            response.append(result);
+            return response.toString();
         } else if (Objects.equals(commandEnum, Command.FIND)) {
             if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                System.out.println("The search keyword cannot be empty my fren :(");
-                return;
+                String errorMessage = "The search keyword cannot be empty my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
             }
             String keyword = parts[1].trim();
-            Ui.showFindMessage();
-            taskList.searchTasksByKeyword(keyword).printList();
+            StringBuilder response = new StringBuilder();
+            String findMessage = Ui.showFindMessage();
+            response.append(findMessage).append("\n");
+            String findResult = taskList.searchTasksByKeyword(keyword).printList();
+            response.append(findResult);
+            return response.toString();
         } else if (Objects.equals(commandEnum, Command.DELETE)) {
-            Ui.showDeleteMessage(taskList.getTask(Integer.parseInt(parts[1]) - 1));
+            StringBuilder response = new StringBuilder();
+            String deleteMessage = Ui.showDeleteMessage(taskList.getTask(Integer.parseInt(parts[1]) - 1));
+            response.append(deleteMessage).append("\n");
             taskList.deleteTask(Integer.parseInt(parts[1]) - 1);
-            Ui.showListSize(taskList.getListSize());
+            String result = Ui.showListSize(taskList.getListSize());
+            response.append(result);
+            return response.toString();
         } else if (Objects.equals(commandEnum, Command.MARK)) {
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             Task task = taskList.getTask(taskNumber);
             task.mark();
-            Ui.showMarkMessage(task);
+            return Ui.showMarkMessage(task);
         } else if (Objects.equals(commandEnum, Command.UNMARK)) {
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             Task task = taskList.getTask(taskNumber);
             task.unmark();
-            Ui.showUnmarkMessage(task);
+            return Ui.showUnmarkMessage(task);
         } else if (Objects.equals(commandEnum, Command.TODO)) {
             try {
                 Todo todo = Todo.addTodoTask(parts[1], false);
-                Ui.showAddMessage(todo);
+                StringBuilder response = new StringBuilder();
+                String addMessage = Ui.showAddMessage(todo);
+                response.append(addMessage).append("\n");
                 taskList.addTask(todo);
-                Ui.showListSize(taskList.getListSize());
+                String result = Ui.showListSize(taskList.getListSize());
+                response.append(result);
+                return response.toString();
             } catch (FrennyException e) {
                 System.out.println(e.getMessage());
+                return e.getMessage();
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("The description of a task cannot be empty my fren :(");
+                String errorMessage = "The description of a task cannot be empty my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
             }
         } else if (Objects.equals(commandEnum, Command.DEADLINE)) {
             try {
                 Deadline deadline = Deadline.addDeadlineTask(parts[1], false);
-                Ui.showAddMessage(deadline);
+                StringBuilder response = new StringBuilder();
+                String addMessage = Ui.showAddMessage(deadline);
+                response.append(addMessage).append("\n");
                 taskList.addTask(deadline);
-                Ui.showListSize(taskList.getListSize());
+                String result = Ui.showListSize(taskList.getListSize());
+                response.append(result);
+                return response.toString();
             } catch (FrennyException | TimeFormatException e) {
                 System.out.println(e.getMessage());
+                return e.getMessage();
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("The description of a deadline cannot be empty my fren :(");
+                String errorMessage = "The description of a task cannot be empty my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
             }
         } else if (Objects.equals(commandEnum, Command.EVENT)) {
             try {
                 Event event = Event.addEventTask(parts[1], false);
-                Ui.showAddMessage(event);
+                StringBuilder response = new StringBuilder();
+                String addMessage = Ui.showAddMessage(event);
+                response.append(addMessage).append("\n");
                 taskList.addTask(event);
-                Ui.showListSize(taskList.getListSize());
+                String result = Ui.showListSize(taskList.getListSize());
+                response.append(result);
+                return response.toString();
             } catch (FrennyException | TimeFormatException e) {
                 System.out.println(e.getMessage());
+                return e.getMessage();
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("The description of a event cannot be empty my fren :(");
+                String errorMessage = "The description of a task cannot be empty my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
             }
         } else {
-            System.out.println("Idk what you mean :(");
+            String errorMessage = "Idk what you mean :(";
+            System.out.println(errorMessage);
+            return errorMessage;
         }
     }
 }

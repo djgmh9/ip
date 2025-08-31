@@ -22,10 +22,13 @@ public class TaskList {
     /**
      * Prints the list of tasks with their indices.
      */
-    public void printList() {
+    public String printList() {
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < getListSize(); i++) {
-            System.out.println((i + 1) + "." + items.get(i));
+            result.append(i + 1).append(". ").append(getTask(i)).append("\n");
         }
+        System.out.println(result.toString().trim());
+        return result.toString().trim();
     }
     /**
      * Gets the list of tasks.

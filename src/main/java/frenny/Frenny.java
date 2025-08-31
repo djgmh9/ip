@@ -53,7 +53,6 @@ public class Frenny {
                 storage.writeFile(taskList);
             } catch (IOException e) {
                 System.out.println("An error occurred while writing to the file.");
-                e.printStackTrace();
             }
             Ui.showLine();
         }
@@ -73,6 +72,13 @@ public class Frenny {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
-        return "Frenny heard: " + input;
+        String response = Parser.processInput(taskList, input);
+        // Save the updated task list to storage
+        try {
+            storage.writeFile(taskList);
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file.");
+        }
+        return response;
     }
 }

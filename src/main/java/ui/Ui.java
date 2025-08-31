@@ -36,12 +36,15 @@ public class Ui {
     /**
      * Displays the message indicating the start of the task list.
      */
-    public static void showListMessage(int listSize) {
+    public static String showListMessage(int listSize) {
+        String message;
         if (listSize == 0) {
-            System.out.println("No task found :(");
+            message = "No task found :(";
         } else {
-            System.out.println("Here are the tasks in your list:");
+            message = "Here are the tasks in your list:";
         }
+        System.out.println(message);
+        return message;
     }
 
     /**
@@ -49,9 +52,10 @@ public class Ui {
      *
      * @param task The task that has been deleted.
      */
-    public static void showDeleteMessage(Task task) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(task);
+    public static String showDeleteMessage(Task task) {
+        String message = "Noted. I've removed this task:\n" + task;
+        System.out.println(message);
+        return message;
     }
 
     /**
@@ -59,9 +63,10 @@ public class Ui {
      *
      * @param task The task that has been added.
      */
-    public static void showAddMessage(Task task) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task);
+    public static String showAddMessage(Task task) {
+        String message = "Got it. I've added this task:\n" + task;
+        System.out.println(message);
+        return message;
     }
 
     /**
@@ -69,12 +74,15 @@ public class Ui {
      *
      * @param listSize The current number of tasks in the list.
      */
-    public static void showListSize(int listSize) {
+    public static String showListSize(int listSize) {
+        String message;
         if (listSize == 1) {
-            System.out.println("Now you have " + listSize + " task in the list.");
+            message = "Now you have " + listSize + " task in the list.";
         } else {
-            System.out.println("Now you have " + listSize + " tasks in the list.");
+            message = "Now you have " + listSize + " tasks in the list.";
         }
+        System.out.println(message);
+        return message;
     }
 
     /**
@@ -82,9 +90,10 @@ public class Ui {
      *
      * @param task The task that has been marked as done.
      */
-    public static void showMarkMessage(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task);
+    public static String showMarkMessage(Task task) {
+        String message = "Nice! I've marked this task as done:\n" + task;
+        System.out.println(message);
+        return message;
     }
 
     /**
@@ -92,15 +101,18 @@ public class Ui {
      *
      * @param task The task that has been unmarked as not done.
      */
-    public static void showUnmarkMessage(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task);
+    public static String showUnmarkMessage(Task task) {
+        String message = "OK, I've marked this task as not done yet:\n" + task;
+        System.out.println(message);
+        return message;
     }
 
     /**
      * Displays the message indicating the start of the search results.
      */
-    public static void showFindMessage() {
-        System.out.println("Here are the matching tasks in your list:");
+    public static String showFindMessage() {
+        String message = "Here are the matching tasks in your list:";
+        System.out.println(message);
+        return message;
     }
 }
