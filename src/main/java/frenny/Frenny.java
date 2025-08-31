@@ -68,4 +68,11 @@ public class Frenny {
         String filePath = projectDir + "/data/frenny.txt";
         new Frenny(filePath).run();
     }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Frenny heard: " + input;
+    }
 }
