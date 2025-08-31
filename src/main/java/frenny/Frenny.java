@@ -15,7 +15,7 @@ import ui.Ui;
  * It initializes the application, processes user input, and manages the task list.
  */
 public class Frenny {
-    private static final String projectDir = System.getProperty("user.dir");
+    private static final String PROJECT_DIR = System.getProperty("user.dir");
     private final Storage storage;
     private final TaskList taskList;
 
@@ -65,7 +65,7 @@ public class Frenny {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
-        String filePath = projectDir + "/data/frenny.txt";
+        String filePath = PROJECT_DIR + "/data/frenny.txt";
         new Frenny(filePath).run();
     }
 
