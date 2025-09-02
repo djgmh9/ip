@@ -1,6 +1,8 @@
 package gui;
 
 import frenny.Frenny;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -8,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+import ui.Ui;
+
 /**
  * Controller for the main GUI.
  */
@@ -45,9 +50,35 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = frenny.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getUserDialog(input, userImage)
+        );
+        if (input.trim().equalsIgnoreCase("bye")) {
+            handleExit(response);
+        } else {
+            dialogContainer.getChildren().addAll(
+                DialogBox.getFrennyDialog(response, frennyImage)
+            );
+        }
+        userInput.clear();
+    }
+
+    /**
+     * Handles and displays the welcome message from Frenny when the application starts.
+     */
+    public void handleWelcomeMessage() {
+        String response = Ui.showIntro();
+        dialogContainer.getChildren().addAll(
                 DialogBox.getFrennyDialog(response, frennyImage)
         );
-        userInput.clear();
+    }
+
+    private void handleExit(String response) {
+        dialogContainer.getChildren().add(
+                DialogBox.getFrennyDialog(response, frennyImage)
+        );
+        // Add delay before exit
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> Platform.exit());
+        delay.play();
     }
 }

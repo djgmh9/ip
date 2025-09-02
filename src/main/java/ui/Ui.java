@@ -9,21 +9,22 @@ public class Ui {
     /**
      * Displays the introduction message to the user.
      */
-    public static void showIntro() {
+    public static String showIntro() {
         String intro = """
-                ____________________________________________________________
                  Hello! I'm Frenny
                  What can I do for you?
-                ____________________________________________________________""";
+                """;
         System.out.println(intro);
+        return intro;
     }
 
     /**
      * Displays the outro message to the user.
      */
-    public static void showOutro() {
+    public static String showOutro() {
         String outro = "Bye. Hope to see you again soon!";
         System.out.println(outro);
+        return outro;
     }
 
     /**

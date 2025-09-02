@@ -68,7 +68,9 @@ public class Parser {
         String[] parts = input.split(" ", 2);
         String taskType = parts[0];
         Command commandEnum = Command.fromString(taskType);
-        if (Objects.equals(commandEnum, Command.LIST)) {
+        if (Objects.equals(commandEnum, Command.BYE)) {
+            return Ui.showOutro();
+        } else if (Objects.equals(commandEnum, Command.LIST)) {
             StringBuilder response = new StringBuilder();
             String listMessage = Ui.showListMessage(taskList.getListSize());
             response.append(listMessage).append("\n");
