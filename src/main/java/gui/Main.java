@@ -3,11 +3,15 @@ package gui;
 import java.io.IOException;
 
 import frenny.Frenny;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import ui.Ui;
 
 /**
  * A GUI for Frenny using FXML.
@@ -21,6 +25,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            stage.setTitle("Frenny");
             // Set minimum window size
             stage.setMinHeight(220);
             stage.setMinWidth(417);
@@ -30,8 +35,19 @@ public class Main extends Application {
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setFrenny(frenny); // inject the Frenny instance
             stage.show();
+            // Show welcome message
+            fxmlLoader.<MainWindow>getController().handleWelcomeMessage();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void stop() {
+        Ui.showOutro();
+        // Optionally, you can add a delay before closing the application to allow the user to read the goodbye message.
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> Platform.exit());
+        delay.play();
     }
 }

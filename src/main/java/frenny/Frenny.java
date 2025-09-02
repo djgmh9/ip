@@ -26,7 +26,9 @@ public class Frenny {
      */
     public Frenny(String filePath) {
         storage = new Storage(filePath);
+        Ui.showLine();
         Ui.showIntro();
+        Ui.showLine();
         TaskList taskList = new TaskList();
         this.taskList = taskList;
         storage.readFile(taskList);
