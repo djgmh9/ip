@@ -66,7 +66,9 @@ public class MainWindow extends AnchorPane {
      * Handles and displays the welcome message from Frenny when the application starts.
      */
     public void handleWelcomeMessage() {
-        String response = Ui.showIntro();
+        String intro = Ui.showIntro();
+        String showCurrentList = frenny.getResponse("list");
+        String response = intro + "\n" + showCurrentList;
         dialogContainer.getChildren().addAll(
                 DialogBox.getFrennyDialog(response, frennyImage)
         );

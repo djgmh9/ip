@@ -1,5 +1,6 @@
 package command;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import exception.CorruptedFileException;
@@ -91,23 +92,59 @@ public class Parser {
             response.append(findResult);
             return response.toString();
         } else if (Objects.equals(commandEnum, Command.DELETE)) {
-            StringBuilder response = new StringBuilder();
-            String deleteMessage = Ui.showDeleteMessage(taskList.getTask(Integer.parseInt(parts[1]) - 1));
-            response.append(deleteMessage).append("\n");
-            taskList.deleteTask(Integer.parseInt(parts[1]) - 1);
-            String result = Ui.showListSize(taskList.getListSize());
-            response.append(result);
-            return response.toString();
+            try {
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    String errorMessage = "Please provide valid task numbers to delete my fren :(";
+                    System.out.println(errorMessage);
+                    return errorMessage;
+                }
+                StringBuilder response = new StringBuilder();
+                int[] taskNumbers = stringToIntArray(parts[1]);
+                Task[] tasks = taskList.getTasks(taskNumbers);
+                String deleteMessage = Ui.showDeleteMessage(tasks);
+                response.append(deleteMessage).append("\n");
+                taskList.deleteTasks(taskNumbers);
+                String result = Ui.showListSize(taskList.getListSize());
+                response.append(result);
+                return response.toString();
+            } catch (NumberFormatException e) {
+                String errorMessage = "Please provide valid task numbers to delete my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
         } else if (Objects.equals(commandEnum, Command.MARK)) {
-            int taskNumber = Integer.parseInt(parts[1]) - 1;
-            Task task = taskList.getTask(taskNumber);
-            task.mark();
-            return Ui.showMarkMessage(task);
+            try {
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    String errorMessage = "Please provide valid task numbers to mark my fren :(";
+                    System.out.println(errorMessage);
+                    return errorMessage;
+                }
+                int[] taskNumbers = stringToIntArray(parts[1]);
+                taskList.markTasks(taskNumbers);
+                Task[] tasks = taskList.getTasks(taskNumbers);
+                System.out.println(Arrays.toString(tasks));
+                return Ui.showMarkMessage(tasks);
+            } catch (NumberFormatException e) {
+                String errorMessage = "Please provide valid task numbers to mark my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
         } else if (Objects.equals(commandEnum, Command.UNMARK)) {
-            int taskNumber = Integer.parseInt(parts[1]) - 1;
-            Task task = taskList.getTask(taskNumber);
-            task.unmark();
-            return Ui.showUnmarkMessage(task);
+            try {
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    String errorMessage = "Please provide valid task numbers to unmark my fren :(";
+                    System.out.println(errorMessage);
+                    return errorMessage;
+                }
+                int[] taskNumbers = stringToIntArray(parts[1]);
+                taskList.unmarkTasks(taskNumbers);
+                Task[] tasks = taskList.getTasks(taskNumbers);
+                return Ui.showUnmarkMessage(tasks);
+            } catch (NumberFormatException e) {
+                String errorMessage = "Please provide valid task numbers to unmark my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
         } else if (Objects.equals(commandEnum, Command.TODO)) {
             try {
                 Todo todo = Todo.addTodoTask(parts[1], false);
@@ -167,5 +204,14 @@ public class Parser {
             System.out.println(errorMessage);
             return errorMessage;
         }
+    }
+
+    private static int[] stringToIntArray(String input) {
+        String[] parts = input.split(" ");
+        int[] numbers = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            numbers[i] = Integer.parseInt(parts[i]);
+        }
+        return numbers;
     }
 }

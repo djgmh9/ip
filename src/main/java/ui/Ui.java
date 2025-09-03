@@ -49,14 +49,17 @@ public class Ui {
     }
 
     /**
-     * Displays the message indicating a task has been deleted.
+     * Displays the message indicating tasks have been deleted.
      *
-     * @param task The task that has been deleted.
+     * @param tasks The tasks that have been deleted.
      */
-    public static String showDeleteMessage(Task task) {
-        String message = "Noted. I've removed this task:\n" + task;
+    public static String showDeleteMessage(Task... tasks) {
+        StringBuilder message = new StringBuilder("Noted. I've removed these tasks:\n");
+        for (Task task : tasks) {
+            message.append(task).append("\n");
+        }
         System.out.println(message);
-        return message;
+        return message.toString();
     }
 
     /**
@@ -87,25 +90,31 @@ public class Ui {
     }
 
     /**
-     * Displays the message indicating a task has been marked as done.
+     * Displays the message indicating tasks have been marked as done.
      *
-     * @param task The task that has been marked as done.
+     * @param tasks The tasks that has been marked as done.
      */
-    public static String showMarkMessage(Task task) {
-        String message = "Nice! I've marked this task as done:\n" + task;
+    public static String showMarkMessage(Task... tasks) {
+        StringBuilder message = new StringBuilder("Nice! I've marked these tasks as done:\n");
+        for (Task task : tasks) {
+            message.append(task).append("\n");
+        }
         System.out.println(message);
-        return message;
+        return message.toString();
     }
 
     /**
      * Displays the message indicating a task has been unmarked as not done.
      *
-     * @param task The task that has been unmarked as not done.
+     * @param tasks The task that has been unmarked as not done.
      */
-    public static String showUnmarkMessage(Task task) {
-        String message = "OK, I've marked this task as not done yet:\n" + task;
+    public static String showUnmarkMessage(Task... tasks) {
+        StringBuilder message = new StringBuilder("OK, I've marked these tasks as not done yet:\n");
+        for (Task task : tasks) {
+            message.append(task).append("\n");
+        }
         System.out.println(message);
-        return message;
+        return message.toString();
     }
 
     /**

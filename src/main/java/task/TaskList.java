@@ -24,8 +24,8 @@ public class TaskList {
      */
     public String printList() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < getListSize(); i++) {
-            result.append(i + 1).append(". ").append(getTask(i)).append("\n");
+        for (int i = 0; i < items.size(); i++) {
+            result.append(i + 1).append(". ").append(items.get(i)).append("\n");
         }
         System.out.println(result.toString().trim());
         return result.toString().trim();
@@ -48,11 +48,44 @@ public class TaskList {
 
     /**
      * Gets the task at the specified index.
-     * @param index Index of the task to retrieve.
+     * @param indices Index of the task to retrieve.
      * @return Task at the specified index.
      */
-    public Task getTask(int index) {
-        return items.get(index);
+    public Task[] getTasks(int... indices) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (int index : indices) {
+            int realIndex = index - 1;
+            if (realIndex >= 0 && realIndex < items.size()) {
+                tasks.add(items.get(realIndex));
+            }
+        }
+        return tasks.toArray(new Task[0]); // Convert ArrayList to array
+    }
+
+    /**
+     * Marks the task at the specified index as done.
+     * @param indices Index of the task to be marked.
+     */
+    public void markTasks(int... indices) {
+        for (int index : indices) {
+            int realIndex = index - 1;
+            if (realIndex >= 0 && realIndex < items.size()) {
+                items.get(realIndex).mark();
+            }
+        }
+    }
+
+    /**
+     * Unmarks the task at the specified index as not done.
+     * @param indices Index of the task to be unmarked.
+     */
+    public void unmarkTasks(int... indices) {
+        for (int index : indices) {
+            int realIndex = index - 1;
+            if (realIndex >= 0 && realIndex < items.size()) {
+                items.get(realIndex).unmark();
+            }
+        }
     }
 
     /**
@@ -65,10 +98,17 @@ public class TaskList {
 
     /**
      * Deletes the task at the specified index from the list.
-     * @param index Index of the task to be deleted.
+     * @param indices Index of the task to be deleted.
      */
-    public void deleteTask(int index) {
-        items.remove(index);
+    public void deleteTasks(int... indices) {
+        // Sort indices in descending order to avoid shifting issues
+        java.util.Arrays.sort(indices); // Sort in ascending order
+        for (int i = indices.length - 1; i >= 0; i--) { // Iterate in reverse order
+            int realIndex = indices[i] - 1; // Convert to zero-based index
+            if (realIndex >= 0 && realIndex < items.size()) {
+                items.remove(realIndex);
+            }
+        }
     }
 
     /**
