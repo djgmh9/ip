@@ -9,7 +9,7 @@ import exception.TimeFormatException;
  * Represents a date and time.
  */
 public class Time {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static DateTimeFormatter parseFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static DateTimeFormatter printFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
 
     private LocalDateTime dateTime;
@@ -27,7 +27,7 @@ public class Time {
      */
     public static Time parseDateTime(String dateTimeStr) throws TimeFormatException {
         try {
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, parseFormatter);
             return new Time(dateTime);
         } catch (Exception e) {
             throw new TimeFormatException("Invalid date/time format. Please use 'dd/MM/yyyy HH:mm' format.");
