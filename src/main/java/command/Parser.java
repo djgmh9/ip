@@ -1,6 +1,5 @@
 package command;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import exception.CorruptedFileException;
@@ -20,6 +19,164 @@ import ui.Ui;
  * It interprets commands and manages tasks in the TaskList.
  */
 public class Parser {
+    private static String list(TaskList taskList) {
+        StringBuilder response = new StringBuilder();
+        String listMessage = Ui.showListMessage(taskList.getListSize());
+        response.append(listMessage).append("\n");
+        String result = taskList.printList();
+        response.append(result);
+        return response.toString();
+    }
+
+    private static String find(TaskList taskList, String[] parts) {
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            String errorMessage = "The search keyword cannot be empty my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+        String keyword = parts[1].trim();
+        StringBuilder response = new StringBuilder();
+        String findMessage = Ui.showFindMessage();
+        response.append(findMessage).append("\n");
+        String findResult = taskList.searchTasksByKeyword(keyword).printList();
+        response.append(findResult);
+        return response.toString();
+    }
+
+    private static String delete(TaskList taskList, String[] parts) {
+        try {
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                String errorMessage = "Please provide valid task numbers to delete my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
+            StringBuilder response = new StringBuilder();
+            int[] taskNumbers = stringToIntArray(parts[1]);
+            Task[] tasks = taskList.getTasks(taskNumbers);
+            String deleteMessage = Ui.showDeleteMessage(tasks);
+            response.append(deleteMessage).append("\n");
+            taskList.deleteTasks(taskNumbers);
+            String result = Ui.showListSize(taskList.getListSize());
+            response.append(result);
+            return response.toString();
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please provide valid task numbers to delete my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String mark(TaskList taskList, String[] parts) {
+        try {
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                String errorMessage = "Please provide valid task numbers to mark my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
+            int[] taskNumbers = stringToIntArray(parts[1]);
+            taskList.markTasks(taskNumbers);
+            Task[] tasks = taskList.getTasks(taskNumbers);
+            return Ui.showMarkMessage(tasks);
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please provide valid task numbers to mark my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String unmark(TaskList taskList, String[] parts) {
+        try {
+            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                String errorMessage = "Please provide valid task numbers to unmark my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
+            int[] taskNumbers = stringToIntArray(parts[1]);
+            taskList.unmarkTasks(taskNumbers);
+            Task[] tasks = taskList.getTasks(taskNumbers);
+            return Ui.showUnmarkMessage(tasks);
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please provide valid task numbers to unmark my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String todo(TaskList taskList, String[] parts) {
+        try {
+            Todo todo = Todo.addTodoTask(parts[1], false);
+            StringBuilder response = new StringBuilder();
+            String addMessage = Ui.showAddMessage(todo);
+            response.append(addMessage).append("\n");
+            taskList.addTask(todo);
+            String result = Ui.showListSize(taskList.getListSize());
+            response.append(result);
+            return response.toString();
+        } catch (FrennyException e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            String errorMessage = "The description of a task cannot be empty my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String deadline(TaskList taskList, String[] parts) {
+        try {
+            Deadline deadline = Deadline.addDeadlineTask(parts[1], false);
+            StringBuilder response = new StringBuilder();
+            String addMessage = Ui.showAddMessage(deadline);
+            response.append(addMessage).append("\n");
+            taskList.addTask(deadline);
+            String result = Ui.showListSize(taskList.getListSize());
+            response.append(result);
+            return response.toString();
+        } catch (FrennyException | TimeFormatException e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            String errorMessage = "The description of a task cannot be empty my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String event(TaskList taskList, String[] parts) {
+        try {
+            Event event = Event.addEventTask(parts[1], false);
+            StringBuilder response = new StringBuilder();
+            String addMessage = Ui.showAddMessage(event);
+            response.append(addMessage).append("\n");
+            taskList.addTask(event);
+            String result = Ui.showListSize(taskList.getListSize());
+            response.append(result);
+            return response.toString();
+        } catch (FrennyException | TimeFormatException e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            String errorMessage = "The description of a task cannot be empty my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
+    private static String handleInvalidCommand() {
+        String errorMessage = "Idk what you want :(";
+        System.out.println(errorMessage);
+        return errorMessage;
+    }
+
+    private static boolean getIsDone(String status) throws CorruptedFileException {
+        if (Objects.equals(status, "1")) {
+            return true;
+        } else if (Objects.equals(status, "0")) {
+            return false;
+        } else {
+            throw new CorruptedFileException("Corrupted mark status in file :(");
+        }
+    }
     /**
      * Processes a line from the history file and adds the corresponding task to the TaskList.
      *
@@ -34,17 +191,11 @@ public class Parser {
             throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
         assert taskList != null : "TaskList should not be null";
         String[] parts = input.split(" \\| ", 2);
-        boolean isDone;
-        if (Objects.equals(parts[0], "1")) {
-            isDone = true;
-        } else if (Objects.equals(parts[0], "0")) {
-            isDone = false;
-        } else {
-            throw new CorruptedFileException("Corrupted mark status in file :(");
-        }
+
+        boolean isDone = getIsDone(parts[0]);
         String[] taskParts = parts[1].split(" ", 2);
-        String taskType = taskParts[0];
-        CommandType commandType = CommandType.fromString(taskType);
+        String commandTypeString = taskParts[0];
+        CommandType commandType = CommandType.fromString(commandTypeString);
         switch (commandType) {
         case TODO -> {
             Todo todo = Todo.addTodoTask(taskParts[1], isDone);
@@ -72,152 +223,38 @@ public class Parser {
         // Implementation for adding a task
         assert taskList != null : "TaskList should not be null";
         String[] parts = input.split(" ", 2);
-        String taskType = parts[0];
-        CommandType commandType = CommandType.fromString(taskType);
+        String commandTypeString = parts[0];
+        CommandType commandType = CommandType.fromString(commandTypeString);
         switch (commandType) {
         case BYE -> {
             return Ui.showOutro();
         }
         case LIST -> {
-            StringBuilder response = new StringBuilder();
-            String listMessage = Ui.showListMessage(taskList.getListSize());
-            response.append(listMessage).append("\n");
-            String result = taskList.printList();
-            response.append(result);
-            return response.toString();
+            return list(taskList);
         }
         case FIND -> {
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                String errorMessage = "The search keyword cannot be empty my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
-            String keyword = parts[1].trim();
-            StringBuilder response = new StringBuilder();
-            String findMessage = Ui.showFindMessage();
-            response.append(findMessage).append("\n");
-            String findResult = taskList.searchTasksByKeyword(keyword).printList();
-            response.append(findResult);
-            return response.toString();
+            return find(taskList, parts);
         }
         case DELETE -> {
-            try {
-                if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                    String errorMessage = "Please provide valid task numbers to delete my fren :(";
-                    System.out.println(errorMessage);
-                    return errorMessage;
-                }
-                StringBuilder response = new StringBuilder();
-                int[] taskNumbers = stringToIntArray(parts[1]);
-                Task[] tasks = taskList.getTasks(taskNumbers);
-                String deleteMessage = Ui.showDeleteMessage(tasks);
-                response.append(deleteMessage).append("\n");
-                taskList.deleteTasks(taskNumbers);
-                String result = Ui.showListSize(taskList.getListSize());
-                response.append(result);
-                return response.toString();
-            } catch (NumberFormatException e) {
-                String errorMessage = "Please provide valid task numbers to delete my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return delete(taskList, parts);
         }
         case MARK -> {
-            try {
-                if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                    String errorMessage = "Please provide valid task numbers to mark my fren :(";
-                    System.out.println(errorMessage);
-                    return errorMessage;
-                }
-                int[] taskNumbers = stringToIntArray(parts[1]);
-                taskList.markTasks(taskNumbers);
-                Task[] tasks = taskList.getTasks(taskNumbers);
-                System.out.println(Arrays.toString(tasks));
-                return Ui.showMarkMessage(tasks);
-            } catch (NumberFormatException e) {
-                String errorMessage = "Please provide valid task numbers to mark my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return mark(taskList, parts);
         }
         case UNMARK -> {
-            try {
-                if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                    String errorMessage = "Please provide valid task numbers to unmark my fren :(";
-                    System.out.println(errorMessage);
-                    return errorMessage;
-                }
-                int[] taskNumbers = stringToIntArray(parts[1]);
-                taskList.unmarkTasks(taskNumbers);
-                Task[] tasks = taskList.getTasks(taskNumbers);
-                return Ui.showUnmarkMessage(tasks);
-            } catch (NumberFormatException e) {
-                String errorMessage = "Please provide valid task numbers to unmark my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return unmark(taskList, parts);
         }
         case TODO -> {
-            try {
-                Todo todo = Todo.addTodoTask(parts[1], false);
-                StringBuilder response = new StringBuilder();
-                String addMessage = Ui.showAddMessage(todo);
-                response.append(addMessage).append("\n");
-                taskList.addTask(todo);
-                String result = Ui.showListSize(taskList.getListSize());
-                response.append(result);
-                return response.toString();
-            } catch (FrennyException e) {
-                System.out.println(e.getMessage());
-                return e.getMessage();
-            } catch (ArrayIndexOutOfBoundsException e) {
-                String errorMessage = "The description of a task cannot be empty my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return todo(taskList, parts);
         }
         case DEADLINE -> {
-            try {
-                Deadline deadline = Deadline.addDeadlineTask(parts[1], false);
-                StringBuilder response = new StringBuilder();
-                String addMessage = Ui.showAddMessage(deadline);
-                response.append(addMessage).append("\n");
-                taskList.addTask(deadline);
-                String result = Ui.showListSize(taskList.getListSize());
-                response.append(result);
-                return response.toString();
-            } catch (FrennyException | TimeFormatException e) {
-                System.out.println(e.getMessage());
-                return e.getMessage();
-            } catch (ArrayIndexOutOfBoundsException e) {
-                String errorMessage = "The description of a task cannot be empty my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return deadline(taskList, parts);
         }
         case EVENT -> {
-            try {
-                Event event = Event.addEventTask(parts[1], false);
-                StringBuilder response = new StringBuilder();
-                String addMessage = Ui.showAddMessage(event);
-                response.append(addMessage).append("\n");
-                taskList.addTask(event);
-                String result = Ui.showListSize(taskList.getListSize());
-                response.append(result);
-                return response.toString();
-            } catch (FrennyException | TimeFormatException e) {
-                System.out.println(e.getMessage());
-                return e.getMessage();
-            } catch (ArrayIndexOutOfBoundsException e) {
-                String errorMessage = "The description of a task cannot be empty my fren :(";
-                System.out.println(errorMessage);
-                return errorMessage;
-            }
+            return event(taskList, parts);
         }
         default -> {
-            String errorMessage = "Idk what you want :(";
-            System.out.println(errorMessage);
-            return errorMessage;
+            return handleInvalidCommand();
         }
         }
     }

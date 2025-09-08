@@ -12,7 +12,8 @@ public enum CommandType {
     DEADLINE,
     EVENT,
     TODO,
-    BYE;
+    BYE,
+    INVALID; // Represents an invalid command
 
     /**
      * Converts a string input to the corresponding Command enum value.
@@ -28,7 +29,7 @@ public enum CommandType {
         try {
             return CommandType.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException e) {
-            return null; // Return null for any invalid command string
+            return INVALID; // Return null for any invalid command string
         }
     }
 }
