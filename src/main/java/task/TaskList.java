@@ -126,14 +126,13 @@ public class TaskList {
      * @return A new TaskList containing tasks that match the keyword.
      */
     public TaskList searchTasksByKeyword(String keyword) {
-        // Convert the search keyword to lowercase once to be efficient
         String lowerCaseKeyword = keyword.toLowerCase();
 
-        return new TaskList(items.stream() // 1. Convert the list to a stream
+        return new TaskList(items.stream()
                 .filter(task -> task
                         .getDescription()
                         .toLowerCase()
-                        .contains(lowerCaseKeyword))// 2. Keep only matching tasks
+                        .contains(lowerCaseKeyword))
                 .collect(Collectors.toList())); // 3. Collect the results back into a new list
     }
 }
