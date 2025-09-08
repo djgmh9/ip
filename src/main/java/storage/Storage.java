@@ -21,6 +21,11 @@ import task.TaskList;
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     *
+     * @param filePath The path to the history file.
+     */
     public Storage(String filePath) {
         assert filePath != null : "File path cannot be null";
         this.filePath = filePath;
