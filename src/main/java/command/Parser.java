@@ -32,6 +32,7 @@ public class Parser {
      */
     public static void processHistory(TaskList taskList, String input)
             throws FrennyException, TimeFormatException, InvalidCommandException, CorruptedFileException {
+        assert taskList != null : "TaskList should not be null";
         String[] parts = input.split(" \\| ", 2);
         boolean isDone;
         if (Objects.equals(parts[0], "1")) {
@@ -66,6 +67,7 @@ public class Parser {
      */
     public static String processInput(TaskList taskList, String input) {
         // Implementation for adding a task
+        assert taskList != null : "TaskList should not be null";
         String[] parts = input.split(" ", 2);
         String taskType = parts[0];
         Command commandEnum = Command.fromString(taskType);
@@ -200,7 +202,7 @@ public class Parser {
                 return errorMessage;
             }
         } else {
-            String errorMessage = "Idk what you mean :(";
+            String errorMessage = "Idk what you want :(";
             System.out.println(errorMessage);
             return errorMessage;
         }

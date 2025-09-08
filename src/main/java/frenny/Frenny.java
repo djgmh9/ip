@@ -25,6 +25,7 @@ public class Frenny {
      * @param filePath The file path where tasks will be stored.
      */
     public Frenny(String filePath) {
+        assert filePath != null : "File path cannot be null";
         storage = new Storage(filePath);
         Ui.showLine();
         Ui.showIntro();

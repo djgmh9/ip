@@ -25,6 +25,7 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     private DialogBox(String text, Image img) {
+        assert img != null : "Image cannot be null";
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -49,10 +50,12 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
+        assert img != null : "Image cannot be null";
         return new DialogBox(text, img);
     }
 
     public static DialogBox getFrennyDialog(String text, Image img) {
+        assert img != null : "Image cannot be null";
         var db = new DialogBox(text, img);
         db.flip();
         return db;

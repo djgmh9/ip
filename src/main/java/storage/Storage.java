@@ -22,6 +22,7 @@ public class Storage {
     private final String filePath;
 
     public Storage(String filePath) {
+        assert filePath != null : "File path cannot be null";
         this.filePath = filePath;
     }
 
@@ -65,6 +66,7 @@ public class Storage {
      * @param taskList The TaskList to populate with tasks from the file.
      */
     public void readFile(TaskList taskList) {
+        assert taskList != null : "TaskList cannot be null";
         try {
             File historyFile = new File(filePath);
             if (historyFile.exists()) {
@@ -93,6 +95,7 @@ public class Storage {
      * @throws IOException If an I/O error occurs while writing to the file.
      */
     public void writeFile(TaskList taskList) throws IOException {
+        assert taskList != null : "TaskList cannot be null";
         List<Task> items = taskList.getList();
         FileWriter fw = new FileWriter(filePath);
         for (Task item : items) {

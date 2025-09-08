@@ -56,6 +56,7 @@ public class Ui {
     public static String showDeleteMessage(Task... tasks) {
         StringBuilder message = new StringBuilder("Noted. I've removed these tasks:\n");
         for (Task task : tasks) {
+            assert task != null : "Task cannot be null";
             message.append(task).append("\n");
         }
         System.out.println(message);
@@ -68,6 +69,7 @@ public class Ui {
      * @param task The task that has been added.
      */
     public static String showAddMessage(Task task) {
+        assert task != null : "Task cannot be null";
         String message = "Got it. I've added this task:\n" + task;
         System.out.println(message);
         return message;
@@ -97,6 +99,7 @@ public class Ui {
     public static String showMarkMessage(Task... tasks) {
         StringBuilder message = new StringBuilder("Nice! I've marked these tasks as done:\n");
         for (Task task : tasks) {
+            assert task != null : "Task cannot be null";
             message.append(task).append("\n");
         }
         System.out.println(message);
@@ -111,6 +114,7 @@ public class Ui {
     public static String showUnmarkMessage(Task... tasks) {
         StringBuilder message = new StringBuilder("OK, I've marked these tasks as not done yet:\n");
         for (Task task : tasks) {
+            assert task != null : "Task cannot be null";
             message.append(task).append("\n");
         }
         System.out.println(message);
