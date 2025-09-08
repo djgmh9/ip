@@ -29,7 +29,8 @@ public class Parser {
     }
 
     private static String find(TaskList taskList, String[] parts) {
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+        boolean emptyKeyword = parts.length < 2 || parts[1].trim().isEmpty();
+        if (emptyKeyword) {
             String errorMessage = "The search keyword cannot be empty my fren :(";
             System.out.println(errorMessage);
             return errorMessage;
@@ -45,7 +46,8 @@ public class Parser {
 
     private static String delete(TaskList taskList, String[] parts) {
         try {
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            boolean emptyKeyword = parts.length < 2 || parts[1].trim().isEmpty();
+            if (emptyKeyword) {
                 String errorMessage = "Please provide valid task numbers to delete my fren :(";
                 System.out.println(errorMessage);
                 return errorMessage;
@@ -68,7 +70,8 @@ public class Parser {
 
     private static String mark(TaskList taskList, String[] parts) {
         try {
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            boolean emptyKeyword = parts.length < 2 || parts[1].trim().isEmpty();
+            if (emptyKeyword) {
                 String errorMessage = "Please provide valid task numbers to mark my fren :(";
                 System.out.println(errorMessage);
                 return errorMessage;
@@ -86,7 +89,8 @@ public class Parser {
 
     private static String unmark(TaskList taskList, String[] parts) {
         try {
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            boolean emptyKeyword = parts.length < 2 || parts[1].trim().isEmpty();
+            if (emptyKeyword) {
                 String errorMessage = "Please provide valid task numbers to unmark my fren :(";
                 System.out.println(errorMessage);
                 return errorMessage;

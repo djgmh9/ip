@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 public class TaskList {
     private final List<Task> items;
 
+    /**
+     * Constructs a TaskList with the specified list of tasks.
+     * @param items List of tasks to initialize the TaskList.
+     */
     public TaskList(List<Task> items) {
         assert items != null : "Items list cannot be null";
         this.items = items;
@@ -48,9 +52,9 @@ public class TaskList {
     }
 
     /**
-     * Gets the task at the specified index.
-     * @param indices Index of the task to retrieve.
-     * @return Task at the specified index.
+     * Gets the tasks at the specified indices.
+     * @param indices Indices of the tasks to retrieve.
+     * @return Tasks at the specified indices.
      */
     public Task[] getTasks(int... indices) {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -66,8 +70,8 @@ public class TaskList {
     }
 
     /**
-     * Marks the task at the specified index as done.
-     * @param indices Index of the task to be marked.
+     * Marks the tasks at the specified indices as done.
+     * @param indices Indices of the tasks to be marked.
      */
     public void markTasks(int... indices) {
         for (int index : indices) {
@@ -81,8 +85,8 @@ public class TaskList {
     }
 
     /**
-     * Unmarks the task at the specified index as not done.
-     * @param indices Index of the task to be unmarked.
+     * Unmarks the tasks at the specified index as not done.
+     * @param indices Indices of the tasks to be unmarked.
      */
     public void unmarkTasks(int... indices) {
         for (int index : indices) {
@@ -105,8 +109,8 @@ public class TaskList {
     }
 
     /**
-     * Deletes the task at the specified index from the list.
-     * @param indices Index of the task to be deleted.
+     * Deletes the tasks at the specified index from the list.
+     * @param indices Indices of the tasks to be deleted.
      */
     public void deleteTasks(int... indices) {
         // Sort indices in descending order to avoid shifting issues
