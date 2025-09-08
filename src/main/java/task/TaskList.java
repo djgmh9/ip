@@ -12,6 +12,7 @@ public class TaskList {
     private final List<Task> items;
 
     public TaskList(List<Task> items) {
+        assert items != null : "Items list cannot be null";
         this.items = items;
     }
 
@@ -56,7 +57,9 @@ public class TaskList {
         for (int index : indices) {
             int realIndex = index - 1;
             if (realIndex >= 0 && realIndex < items.size()) {
-                tasks.add(items.get(realIndex));
+                Task task = items.get(realIndex);
+                assert task != null : "Task cannot be null";
+                tasks.add(task);
             }
         }
         return tasks.toArray(new Task[0]); // Convert ArrayList to array
@@ -70,7 +73,9 @@ public class TaskList {
         for (int index : indices) {
             int realIndex = index - 1;
             if (realIndex >= 0 && realIndex < items.size()) {
-                items.get(realIndex).mark();
+                Task task = items.get(realIndex);
+                assert task != null : "Task cannot be null";
+                task.mark();
             }
         }
     }
@@ -83,7 +88,9 @@ public class TaskList {
         for (int index : indices) {
             int realIndex = index - 1;
             if (realIndex >= 0 && realIndex < items.size()) {
-                items.get(realIndex).unmark();
+                Task task = items.get(realIndex);
+                assert task != null : "Task cannot be null";
+                task.unmark();
             }
         }
     }
@@ -93,6 +100,7 @@ public class TaskList {
      * @param task Task to be added.
      */
     public void addTask(Task task) {
+        assert task != null : "Task cannot be null";
         items.add(task);
     }
 

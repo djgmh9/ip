@@ -36,13 +36,13 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the frenny instance */
-    public void setFrenny(Frenny d) {
-        frenny = d;
+    /** Injects the Frenny instance */
+    public void setFrenny(Frenny frenny) {
+        this.frenny = frenny;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing frenny's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Frenny's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML

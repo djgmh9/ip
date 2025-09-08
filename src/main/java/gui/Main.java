@@ -20,15 +20,17 @@ public class Main extends Application {
 
     private static final String PROJECT_DIR = System.getProperty("user.dir");
     private static final String FILE_PATH = PROJECT_DIR + "data/frenny.txt";
-    private Frenny frenny = new Frenny(FILE_PATH);
+    private final Frenny frenny = new Frenny(FILE_PATH);
 
     @Override
     public void start(Stage stage) {
         try {
+            // Set window title
             stage.setTitle("Frenny");
             // Set minimum window size
             stage.setMinHeight(220);
             stage.setMinWidth(417);
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
@@ -45,7 +47,6 @@ public class Main extends Application {
     @Override
     public void stop() {
         Ui.showOutro();
-        // Optionally, you can add a delay before closing the application to allow the user to read the goodbye message.
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> Platform.exit());
         delay.play();
