@@ -44,18 +44,21 @@ public class Parser {
         }
         String[] taskParts = parts[1].split(" ", 2);
         String taskType = taskParts[0];
-        Command commandEnum = Command.fromString(taskType);
-        if (Objects.equals(commandEnum, Command.TODO)) {
+        CommandType commandType = CommandType.fromString(taskType);
+        switch (commandType) {
+        case TODO -> {
             Todo todo = Todo.addTodoTask(taskParts[1], isDone);
             taskList.addTask(todo);
-        } else if (Objects.equals(commandEnum, Command.DEADLINE)) {
+        }
+        case DEADLINE -> {
             Deadline deadline = Deadline.addDeadlineTask(taskParts[1], isDone);
             taskList.addTask(deadline);
-        } else if (Objects.equals(commandEnum, Command.EVENT)) {
+        }
+        case EVENT -> {
             Event event = Event.addEventTask(taskParts[1], isDone);
             taskList.addTask(event);
-        } else {
-            throw new InvalidCommandException("Invalid command in file :(");
+        }
+        default -> throw new CorruptedFileException("Corrupted task type in file :(");
         }
     }
 
@@ -70,17 +73,20 @@ public class Parser {
         assert taskList != null : "TaskList should not be null";
         String[] parts = input.split(" ", 2);
         String taskType = parts[0];
-        Command commandEnum = Command.fromString(taskType);
-        if (Objects.equals(commandEnum, Command.BYE)) {
+        CommandType commandType = CommandType.fromString(taskType);
+        switch (commandType) {
+        case BYE -> {
             return Ui.showOutro();
-        } else if (Objects.equals(commandEnum, Command.LIST)) {
+        }
+        case LIST -> {
             StringBuilder response = new StringBuilder();
             String listMessage = Ui.showListMessage(taskList.getListSize());
             response.append(listMessage).append("\n");
             String result = taskList.printList();
             response.append(result);
             return response.toString();
-        } else if (Objects.equals(commandEnum, Command.FIND)) {
+        }
+        case FIND -> {
             if (parts.length < 2 || parts[1].trim().isEmpty()) {
                 String errorMessage = "The search keyword cannot be empty my fren :(";
                 System.out.println(errorMessage);
@@ -93,7 +99,8 @@ public class Parser {
             String findResult = taskList.searchTasksByKeyword(keyword).printList();
             response.append(findResult);
             return response.toString();
-        } else if (Objects.equals(commandEnum, Command.DELETE)) {
+        }
+        case DELETE -> {
             try {
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     String errorMessage = "Please provide valid task numbers to delete my fren :(";
@@ -114,7 +121,8 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else if (Objects.equals(commandEnum, Command.MARK)) {
+        }
+        case MARK -> {
             try {
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     String errorMessage = "Please provide valid task numbers to mark my fren :(";
@@ -131,7 +139,8 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else if (Objects.equals(commandEnum, Command.UNMARK)) {
+        }
+        case UNMARK -> {
             try {
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     String errorMessage = "Please provide valid task numbers to unmark my fren :(";
@@ -147,7 +156,8 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else if (Objects.equals(commandEnum, Command.TODO)) {
+        }
+        case TODO -> {
             try {
                 Todo todo = Todo.addTodoTask(parts[1], false);
                 StringBuilder response = new StringBuilder();
@@ -165,7 +175,8 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else if (Objects.equals(commandEnum, Command.DEADLINE)) {
+        }
+        case DEADLINE -> {
             try {
                 Deadline deadline = Deadline.addDeadlineTask(parts[1], false);
                 StringBuilder response = new StringBuilder();
@@ -183,7 +194,8 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else if (Objects.equals(commandEnum, Command.EVENT)) {
+        }
+        case EVENT -> {
             try {
                 Event event = Event.addEventTask(parts[1], false);
                 StringBuilder response = new StringBuilder();
@@ -201,10 +213,12 @@ public class Parser {
                 System.out.println(errorMessage);
                 return errorMessage;
             }
-        } else {
+        }
+        default -> {
             String errorMessage = "Idk what you want :(";
             System.out.println(errorMessage);
             return errorMessage;
+        }
         }
     }
 

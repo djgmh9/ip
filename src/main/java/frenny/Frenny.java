@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-import command.Command;
+import command.CommandType;
 import command.Parser;
 import storage.Storage;
 import task.TaskList;
@@ -44,9 +44,9 @@ public class Frenny {
             String input = consoleScanner.nextLine();
             String[] parts = input.split(" ", 2);
             String command = parts[0];
-            Command commandEnum = Command.fromString(command);
+            CommandType commandEnum = CommandType.fromString(command);
             Ui.showLine();
-            if (Objects.equals(commandEnum, Command.BYE)) {
+            if (Objects.equals(commandEnum, CommandType.BYE)) {
                 Ui.showOutro();
                 break;
             } else {
