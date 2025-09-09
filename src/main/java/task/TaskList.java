@@ -139,4 +139,17 @@ public class TaskList {
                         .contains(lowerCaseKeyword))
                 .collect(Collectors.toList())); // 3. Collect the results back into a new list
     }
+
+    public String editTask(int index) {
+        int realIndex = index - 1;
+        if (realIndex >= 0 && realIndex < items.size()) {
+            Task task = items.get(realIndex);
+            assert task != null : "Task cannot be null";
+            return task.generateHistoryFileEntry();
+        } else {
+            String message = "Invalid task index.";
+            System.out.println(message);
+            return message;
+        }
+    }
 }

@@ -105,7 +105,7 @@ public class Storage {
         FileWriter fw = new FileWriter(filePath);
         for (Task item : items) {
             // Write each task to the file
-            fw.write(item.getCommand() + System.lineSeparator());
+            fw.write(item.generateHistoryFileEntry() + System.lineSeparator());
         }
         fw.close();
     }

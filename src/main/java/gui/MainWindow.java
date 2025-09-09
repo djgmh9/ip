@@ -55,6 +55,8 @@ public class MainWindow extends AnchorPane {
         );
         if (input.trim().equalsIgnoreCase("bye")) {
             handleExit(response);
+        } else if (input.split(" ")[0].equalsIgnoreCase("edit")) {
+            handleEditTask(response);
         } else {
             dialogContainer.getChildren().addAll(
                 DialogBox.getFrennyDialog(response, frennyImage)
@@ -73,6 +75,10 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(
                 DialogBox.getFrennyDialog(response, frennyImage)
         );
+    }
+
+    private void handleEditTask(String taskDetails) {
+        userInput.setText(taskDetails);
     }
 
     private void handleExit(String response) {

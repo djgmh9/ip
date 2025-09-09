@@ -36,13 +36,11 @@ public class Todo extends Task {
         return new Todo(detail, isDone);
     }
 
-    /**
-     * Generates a command string that can be used to recreate this Todo task.
-     * However, it also includes the completion status at the start.
-     *
-     * @return A command string representing the Todo task.
-     */
-    public String getCommand() {
-        return String.format("%s | todo %s", (isDone() ? "1" : "0"), this.description);
+    public String getCommandString() {
+        return "todo " + this.description;
+    }
+
+    public String generateHistoryFileEntry() {
+        return String.format("%s | %s", getDoneEncoding(), getCommandString());
     }
 }

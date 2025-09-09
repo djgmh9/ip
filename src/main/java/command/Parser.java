@@ -166,6 +166,23 @@ public class Parser {
         }
     }
 
+    private static String edit(TaskList taskList, String[] parts) {
+        try {
+            boolean emptyKeyword = parts.length < 2 || parts[1].trim().isEmpty();
+            if (emptyKeyword) {
+                String errorMessage = "Please provide valid task number to edit my fren :(";
+                System.out.println(errorMessage);
+                return errorMessage;
+            }
+            int taskNumber = Integer.parseInt(parts[1]);
+            return taskList.editTask(taskNumber);
+        } catch (NumberFormatException e) {
+            String errorMessage = "Please provide valid task number to edit my fren :(";
+            System.out.println(errorMessage);
+            return errorMessage;
+        }
+    }
+
     private static String handleInvalidCommand() {
         String errorMessage = "Idk what you want :(";
         System.out.println(errorMessage);
@@ -256,6 +273,9 @@ public class Parser {
         }
         case EVENT -> {
             return event(taskList, parts);
+        }
+        case EDIT -> {
+            return "comming soon...";
         }
         default -> {
             return handleInvalidCommand();
