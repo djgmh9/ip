@@ -58,11 +58,11 @@ public class Deadline extends Task {
         return new Deadline(description, by, isDone, time);
     }
 
-    public String getCommandString() {
+    public String generateCommandString() {
         return "deadline " + this.description + " /by " + this.by;
     }
 
     public String generateHistoryFileEntry() {
-        return String.format("%s | %s", getDoneEncoding(), getCommandString());
+        return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }

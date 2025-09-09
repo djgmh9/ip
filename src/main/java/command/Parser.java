@@ -275,7 +275,7 @@ public class Parser {
             return event(taskList, parts);
         }
         case EDIT -> {
-            return "comming soon...";
+            return edit(taskList, parts);
         }
         default -> {
             return handleInvalidCommand();

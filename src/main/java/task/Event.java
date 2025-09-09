@@ -61,11 +61,11 @@ public class Event extends Task {
         return new Event(description, from, to, isDone, timeFrom, timeTo);
     }
 
-    public String getCommandString() {
+    public String generateCommandString() {
         return "event " + this.description + " /from " + this.from + " /to " + this.to;
     }
 
     public String generateHistoryFileEntry() {
-        return String.format("%s | %s", getDoneEncoding(), getCommandString());
+        return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }

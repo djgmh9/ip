@@ -36,11 +36,11 @@ public class Todo extends Task {
         return new Todo(detail, isDone);
     }
 
-    public String getCommandString() {
+    public String generateCommandString() {
         return "todo " + this.description;
     }
 
     public String generateHistoryFileEntry() {
-        return String.format("%s | %s", getDoneEncoding(), getCommandString());
+        return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }

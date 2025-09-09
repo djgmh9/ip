@@ -56,13 +56,14 @@ public class MainWindow extends AnchorPane {
         if (input.trim().equalsIgnoreCase("bye")) {
             handleExit(response);
         } else if (input.split(" ")[0].equalsIgnoreCase("edit")) {
+            System.out.println(response);
             handleEditTask(response);
         } else {
             dialogContainer.getChildren().addAll(
                 DialogBox.getFrennyDialog(response, frennyImage)
             );
+            userInput.clear();
         }
-        userInput.clear();
     }
 
     /**
@@ -78,6 +79,15 @@ public class MainWindow extends AnchorPane {
     }
 
     private void handleEditTask(String taskDetails) {
+        String response = """
+            Ok edit that task in the text field.
+            If it doesn't exist, you will get "Invalid task number".
+            After editing, press Send to confirm.
+            The old task will be deleted
+            and the new task will be added to the end of the list.""";
+        dialogContainer.getChildren().add(
+                DialogBox.getFrennyDialog(response, frennyImage)
+        );
         userInput.setText(taskDetails);
     }
 
