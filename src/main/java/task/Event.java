@@ -61,14 +61,11 @@ public class Event extends Task {
         return new Event(description, from, to, isDone, timeFrom, timeTo);
     }
 
-    /**
-     * Generates a command string that can be used to recreate this event task.
-     * However, it also includes the completion status at the start.
-     *
-     * @return A command string representing the event task.
-     */
-    public String getCommand() {
-        return String.format("%s | event %s /from %s /to %s", (
-                isDone() ? "1" : "0"), this.description, this.from, this.to);
+    public String generateCommandString() {
+        return "event " + this.description + " /from " + this.from + " /to " + this.to;
+    }
+
+    public String generateHistoryFileEntry() {
+        return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }

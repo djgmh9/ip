@@ -130,14 +130,32 @@ public class TaskList {
      * @return A new TaskList containing tasks that match the keyword.
      */
     public TaskList searchTasksByKeyword(String keyword) {
-        // Convert the search keyword to lowercase once to be efficient
         String lowerCaseKeyword = keyword.toLowerCase();
 
-        return new TaskList(items.stream() // 1. Convert the list to a stream
+        return new TaskList(items.stream()
                 .filter(task -> task
                         .getDescription()
                         .toLowerCase()
-                        .contains(lowerCaseKeyword))// 2. Keep only matching tasks
+                        .contains(lowerCaseKeyword))
                 .collect(Collectors.toList())); // 3. Collect the results back into a new list
+    }
+
+    /**
+     * Edits the task at the specified index by removing it from the list and returning its command string.
+     * @param index Index of the task to be edited.
+     * @return Command string of the removed task, or an error message if the index is invalid.
+     */
+    public String editTask(int index) {
+        int realIndex = index - 1;
+        if (realIndex >= 0 && realIndex < items.size()) {
+            Task task = items.get(realIndex);
+            assert task != null : "Task cannot be null";
+            items.remove(realIndex);
+            return task.generateCommandString();
+        } else {
+            String message = "Invalid task index.";
+            System.out.println(message);
+            return message;
+        }
     }
 }

@@ -58,13 +58,11 @@ public class Deadline extends Task {
         return new Deadline(description, by, isDone, time);
     }
 
-    /**
-     * Returns a command string that can be used to recreate this deadline task.
-     * However, it also includes the completion status at the start.
-     *
-     * @return A formatted command string representing the deadline task.
-     */
-    public String getCommand() {
-        return String.format("%s | deadline %s /by %s", (isDone() ? "1" : "0"), this.description, this.by);
+    public String generateCommandString() {
+        return "deadline " + this.description + " /by " + this.by;
+    }
+
+    public String generateHistoryFileEntry() {
+        return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }

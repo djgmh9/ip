@@ -61,11 +61,21 @@ public class Task {
 
     /**
      * Generates a command string that can be used to recreate this task.
-     * However, it also includes the completion status at the start.
+     * This method is intended to be overridden by subclasses to include specific task types.
      *
      * @return A command string representing the task.
      */
-    public String getCommand() {
+    public String generateCommandString() {
+        return this.description;
+    }
+
+    /**
+     * Generates a history file entry for the task.
+     * This method is intended to be overridden by subclasses to include specific task types and statuses.
+     *
+     * @return A history file entry string representing the task.
+     */
+    public String generateHistoryFileEntry() {
         return this.description;
     }
 
@@ -76,5 +86,14 @@ public class Task {
      */
     public boolean isDone() {
         return this.isDone;
+    }
+
+    /**
+     * Returns a string encoding of the task's completion status for storage purposes.
+     *
+     * @return "1" if the task is done, "0" otherwise.
+     */
+    public String getDoneEncoding() {
+        return isDone ? "1" : "0";
     }
 }

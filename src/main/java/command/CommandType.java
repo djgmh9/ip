@@ -13,6 +13,7 @@ public enum CommandType {
     EVENT,
     TODO,
     BYE,
+    EDIT,
     INVALID; // Represents an invalid command
 
     /**
