@@ -10,17 +10,17 @@
 }
 
 .button {
-    -fx-background-color: mediumspringgreen;
+    -fx-background-color: #8bf3fd;
     -fx-font: italic bold 16px "Arial";
 }
 
 .button:hover {
-    -fx-background-color:cyan;
+    -fx-background-color: #2afafa;
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:orange;
+    -fx-background-color: rgba(250, 199, 108, 0.79);
     -fx-font-size: 20px;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
+    -fx-background-color: #574242;
     -fx-background-radius: 1em;
 }
 
