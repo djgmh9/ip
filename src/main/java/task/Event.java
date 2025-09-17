@@ -61,13 +61,13 @@ public class Event extends Task {
         return new Event(description, from, to, isDone, timeFrom, timeTo);
     }
 
+    // I used Copilot to suggest similar message format in Todo and Deadline
     public String generateCommandString() {
-        // I used Copilot to suggest similar message format in Todo and Deadline
         return "event " + this.description + " /from " + this.from + " /to " + this.to;
     }
 
+    // I used Copilot to suggest similar message format in Todo and Deadline
     public String generateHistoryFileEntry() {
-        // I used Copilot to suggest similar message format in Todo and Deadline
         return String.format("%s | %s", getDoneEncoding(), generateCommandString());
     }
 }
