@@ -184,7 +184,7 @@ public class Parser {
     }
 
     private static String handleInvalidCommand() {
-        String errorMessage = "Idk what you want :(";
+        String errorMessage = "I don't get what you want :(";
         System.out.println(errorMessage);
         return errorMessage;
     }

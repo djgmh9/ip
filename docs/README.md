@@ -5,7 +5,8 @@ A fren who manages your tasks - a fren you can trust.
  
 ## List tasks
 - `list`  
-```Here are the tasks in your list:
+```
+Here are the tasks in your list:
 1.[T][ ] return book
 2.[D][ ] buy book (by: Oct 20 2025 18:00)
 3.[E][ ] project meeting (from: Oct 20 2025 18:00 to: Oct 20 2025 20:00)
@@ -14,13 +15,15 @@ A fren who manages your tasks - a fren you can trust.
 ## Add Todo
 - `todo DESCRIPTION`  
 e.g `todo return book`  
-```Got it. I've added this task:
+```
+Got it. I've added this task:
   [T][ ] return book
 Now you have 1 task in the list.
 ```
 
 ## Add Deadline
 
+- DATE TIME format: `dd/MM/yyyy HH:mm`
 - `deadline DESCRIPTION /by DATE TIME`  
 e.g `deadline return book /by 20/10/2025 18:00`
 ```  
@@ -30,6 +33,8 @@ Now you have 1 task in the list.
 ```
 
 ## Add Event
+
+- DATE TIME format: `dd/MM/yyyy HH:mm`
 - `event DESCRIPTION /from DATE TIME /to DATE TIME`  
 e.g `event project meeting /from 20/10/2025 18:00 /to 20/10/2025 20:00`  
 ```
@@ -70,7 +75,8 @@ Now you have 0 tasks in the list.
 ## Find tasks
 - `find KEYWORDS`  
 e.g `find book`  
-```Here are the matching tasks in your list:
+```
+Here are the matching tasks in your list:
 1.[T][ ] return book
 2.[D][ ] buy book (by: Oct 20 2025 18:00)
 ```

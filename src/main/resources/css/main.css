@@ -6,11 +6,13 @@
 
 .text-field {
     -fx-background-color: #f3f3f3;
+    -fx-border-radius: 1em;
     -fx-font: 20px "Arial";
 }
 
 .button {
     -fx-background-color: #0078d7;
+    -fx-border-radius: 1em;
     -fx-font: bold 16px "Arial";
     -fx-text-fill: white;
 }
