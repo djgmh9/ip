@@ -74,7 +74,8 @@ Now you have 0 tasks in the list.
 ```
 
 ## Find tasks
-- `find KEYWORDS`  
+- `find STRING`  
+Search for any task descriptions that contain STRING (case-insensitive).  
 e.g `find book`  
 ```
 Here are the matching tasks in your list:
