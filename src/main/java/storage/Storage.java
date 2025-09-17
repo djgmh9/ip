@@ -64,7 +64,6 @@ public class Storage {
         assert taskList != null : "TaskList cannot be null";
         try {
             File historyFile = new File(filePath);
-            System.out.println("Reading from file: " + historyFile.getAbsolutePath());
             if (historyFile.exists()) {
                 try (Scanner fileScanner = new Scanner(historyFile)) {
                     while (fileScanner.hasNextLine()) {
