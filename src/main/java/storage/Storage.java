@@ -64,6 +64,7 @@ public class Storage {
         assert taskList != null : "TaskList cannot be null";
         try {
             File historyFile = new File(filePath);
+            System.out.println("Reading from file: " + historyFile.getAbsolutePath());
             if (historyFile.exists()) {
                 try (Scanner fileScanner = new Scanner(historyFile)) {
                     while (fileScanner.hasNextLine()) {
@@ -92,15 +93,15 @@ public class Storage {
     public void writeFile(TaskList taskList) {
         assert taskList != null : "TaskList cannot be null";
         List<Task> items = taskList.getList();
-        for (Task item : items) {
-            // Write each task to the file
-            try {
-                FileWriter fw = new FileWriter(filePath);
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            for (Task item : items) {
+                // Write each task to the file
                 fw.write(item.generateHistoryFileEntry() + System.lineSeparator());
-                fw.close();
-            } catch (IOException e) {
-                System.out.println("An error occurred while writing the file.");
             }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing the file.");
         }
     }
 }

@@ -29,8 +29,9 @@ public class MainWindow extends AnchorPane {
 
     private Frenny frenny;
 
-    private Image frennyImage = new Image(this.getClass().getResourceAsStream("/images/frenny.png"));
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
+    // Image loading from classpath to ensure the images are portable with the JAR file
+    private final Image frennyImage = new Image(this.getClass().getResourceAsStream("/images/frenny.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
 
     @FXML
     public void initialize() {
@@ -49,13 +50,18 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        // Trim input
+        input = input.trim();
+        boolean isInputEmpty = input.isEmpty();
+        boolean isEditCommand = !isInputEmpty
+                && input.split(" ")[0].equalsIgnoreCase("edit");
         String response = frenny.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage)
         );
         if (input.trim().equalsIgnoreCase("bye")) {
             handleExit(response);
-        } else if (input.split(" ")[0].equalsIgnoreCase("edit")) {
+        } else if (isEditCommand) {
             System.out.println(response);
             handleEditTask(response);
         } else {

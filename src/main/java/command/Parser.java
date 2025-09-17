@@ -243,6 +243,12 @@ public class Parser {
     public static String processInput(TaskList taskList, String input) {
         // Implementation for adding a task
         assert taskList != null : "TaskList should not be null";
+        // Trim input to avoid issues with leading/trailing spaces
+        input = input.trim();
+        System.out.println(input);
+        if (input.isEmpty()) {
+            return handleInvalidCommand();
+        }
         String[] parts = input.split(" ", 2);
         String commandTypeString = parts[0];
         CommandType commandType = CommandType.fromString(commandTypeString);
@@ -284,9 +290,13 @@ public class Parser {
     }
 
     private static int[] stringToIntArray(String input) {
+        input = input.trim();
         String[] parts = input.split(" ");
         int[] numbers = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
+            if (parts[i].isEmpty()) {
+                continue;
+            }
             numbers[i] = Integer.parseInt(parts[i]);
         }
         return numbers;

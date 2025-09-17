@@ -42,7 +42,7 @@ public class Ui {
         if (listSize == 0) {
             message = "No task for now :P";
         } else {
-            message = "Here are the tasks in your list:";
+            message = "Here are the current tasks in your list:";
         }
         System.out.println(message);
         return message;
