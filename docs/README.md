@@ -1,6 +1,7 @@
 # Frenny User Guide
 
-![Ui.png](Ui.png)
+![Ui.png](Ui.png)  
+
 A fren who manages your tasks - a fren you can trust.
  
 ## List tasks
