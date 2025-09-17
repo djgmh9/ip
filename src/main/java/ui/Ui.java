@@ -11,7 +11,7 @@ public class Ui {
      */
     public static String showIntro() {
         String intro = """
-                 Hello! I'm Frenny
+                 Hello! I'm Frenny ;)
                  What can I do for you?
                 """;
         System.out.println(intro);
@@ -22,7 +22,7 @@ public class Ui {
      * Displays the outro message to the user.
      */
     public static String showOutro() {
-        String outro = "Bye. Hope to see you again soon!";
+        String outro = "Bye. Hope to see you again soon! :D";
         System.out.println(outro);
         return outro;
     }
@@ -40,7 +40,7 @@ public class Ui {
     public static String showListMessage(int listSize) {
         String message;
         if (listSize == 0) {
-            message = "No task found :(";
+            message = "No task for now :P";
         } else {
             message = "Here are the tasks in your list:";
         }

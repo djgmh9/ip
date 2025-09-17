@@ -45,22 +45,12 @@ public class Storage {
      * Prompts the user to decide whether to attempt recovery or reinitialize the file.
      */
     private void handleCorruptedFile() {
-        System.out.println("""
-                            Corrupted history file.
-                            Attempt to recover some saved tasks
-                            (totally depends on your luck)? (y/n)
-                            """);
-
-        Scanner scanner = new Scanner(System.in);
-        String response = scanner.nextLine().trim().toLowerCase();
-        if (response.equals("y")) {
-            try {
-                reinitFile();
-                System.out.println("Old history deleted. A new file has been created.");
-            } catch (IOException e) {
-                System.out.println("An error occurred while reinitializing the file.");
-            }
+        try {
+            reinitFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred while reinitializing the file.");
         }
+        System.out.println("The history file was corrupted and has been reinitialized.");
     }
 
     /**
@@ -99,14 +89,18 @@ public class Storage {
      * @param taskList The TaskList containing tasks to be written to the file.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
-    public void writeFile(TaskList taskList) throws IOException {
+    public void writeFile(TaskList taskList) {
         assert taskList != null : "TaskList cannot be null";
         List<Task> items = taskList.getList();
-        FileWriter fw = new FileWriter(filePath);
         for (Task item : items) {
             // Write each task to the file
-            fw.write(item.generateHistoryFileEntry() + System.lineSeparator());
+            try {
+                FileWriter fw = new FileWriter(filePath);
+                fw.write(item.generateHistoryFileEntry() + System.lineSeparator());
+                fw.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred while writing the file.");
+            }
         }
-        fw.close();
     }
 }

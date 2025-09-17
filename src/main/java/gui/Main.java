@@ -19,7 +19,11 @@ import ui.Ui;
 public class Main extends Application {
 
     private static final String PROJECT_DIR = System.getProperty("user.dir");
-    private static final String FILE_PATH = PROJECT_DIR + "data/frenny.txt";
+    private static final String FILE_PATH = PROJECT_DIR + "/data/frenny.txt";
+    {
+        System.out.println("Project Directory: " + PROJECT_DIR);
+        System.out.println(FILE_PATH);
+    }
     private final Frenny frenny = new Frenny(FILE_PATH);
 
     @Override

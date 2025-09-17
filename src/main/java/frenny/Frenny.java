@@ -1,6 +1,5 @@
 package frenny;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -52,11 +51,7 @@ public class Frenny {
             } else {
                 Parser.processInput(taskList, input);
             }
-            try {
-                storage.writeFile(taskList);
-            } catch (IOException e) {
-                System.out.println("An error occurred while writing to the file.");
-            }
+            storage.writeFile(taskList);
             Ui.showLine();
         }
     }
@@ -77,11 +72,7 @@ public class Frenny {
     public String getResponse(String input) {
         String response = Parser.processInput(taskList, input);
         // Save the updated task list to storage
-        try {
-            storage.writeFile(taskList);
-        } catch (IOException e) {
-            System.out.println("An error occurred while writing to the file.");
-        }
+        storage.writeFile(taskList);
         return response;
     }
 }
