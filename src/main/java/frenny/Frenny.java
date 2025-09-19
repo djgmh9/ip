@@ -57,7 +57,7 @@ public class Frenny {
     }
 
     /**
-     * The main method to start the Frenny application.
+     * Starts the Frenny CLI application.
      *
      * @param args Command-line arguments (not used).
      */
