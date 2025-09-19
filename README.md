@@ -1,4 +1,4 @@
-# Frenny - a Task Manager
+# Frenny - a Task Manager ![frenny_icon.png](src/main/resources/images/frenny_icon.png)
 
 This is my task manager built with JavaFx.
 
